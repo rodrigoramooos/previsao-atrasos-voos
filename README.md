@@ -39,7 +39,7 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 * 2. É possível prever com precisão se um voo irá atrasar antes da sua partida?
 * 3. Existem padrões temporais (hora do dia, dia da semana, estação) associados a maiores probabilidades de atraso?
 * 4. Certas companhias aéreas ou aeroportos apresentam maior probabilidade de atrasos?
-* 5. Qual o modelo de machine learning que apresenta melhor desempenho neste problema?
+* 5. Que variáveis têm maior influência na ocorrência de atrasos e de que forma contribuem para a sua previsão?
 ### Ferramentas e bibliotecas Python
 #### Manipulação e preparação de dados
 * **pandas** — carregamento, limpeza e transformação de dados.
