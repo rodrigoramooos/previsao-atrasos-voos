@@ -17,13 +17,55 @@ A estrutura deste projeto segue as boas práticas de Ciência de Dados e Engenha
 
 ## 1. Iniciação (Milestone 1)
 ### Contexto e Problema de Negócio
-[Descreve o problema que pretendem resolver. Qual é o desafio da empresa ou organização?]
-### Objetivos do Projeto
-* **Objetivo 1:** [Ex: Prever a rotatividade de clientes]
-* **Objetivo 2:** [Ex: Identificar os principais fatores de influência]
+Este projeto baseia-se na previsão de atrasos e cancelamento de voos comerciais, recorrendo a técnicas de ciência de dados e aprendizagem automática aplicadas a dados reais de operações aéreas.
+### Relevância do Projeto
+Os atrasos em voos têm impacto direto em:
+* Eficiência operacional das companhias aéreas
+* Experiência e satisfação dos passageiros
+* Custos logísticos e de gestão aeroportuária
+* Planeamento de rotas e alocação de recursos
+A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir custos e melhorar a qualidade do serviço.
+### Objetivos SMART do Projeto
+* **S - Specific:** [Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).]
+* **M - Measurable:** [Avaliar o desempenho do modelo através de Accuracy, F1-score, ...]
+* **A - Achievable:** [Utilização de dataset real com 1M+ de registos.]
+* **R - Relevant:** [Aplicação direta em logística aérea e otimização operacional.]
+* **T - Time-bound:** [Desenvolvimento do modelo e avaliação até ao final da unidade curricular.]
 ### Fonte de Dados
 * **Dataset:** (https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data)
 * **Dimensão:** [1.048.575 linhas, 18 colunas]
+### Perguntas de Investigação
+* 1. Quais os principais fatores que contribuem para o atraso de voos?
+* 2. É possível prever com precisão se um voo irá atrasar antes da sua partida?
+* 3. Existem padrões temporais (hora do dia, dia da semana, estação) associados a maiores probabilidades de atraso?
+* 4. Certas companhias aéreas ou aeroportos apresentam maior probabilidade de atrasos?
+* 5. Qual o modelo de machine learning que apresenta melhor desempenho neste problema?
+### Ferramentas e bibliotecas Python
+#### Manipulação e preparação de dados
+* **pandas** — carregamento, limpeza e transformação de dados.
+* **numpy** — operações numéricas e manipulação de arrays. 
+
+#### Análise exploratória de dados (EDA)
+* **scipy** — análise estatística  
+
+#### Visualização de dados
+* **matplotlib** — gráficos base  
+* **seaborn** — visualizações estatísticas  
+* **plotly** — gráficos interativos  
+
+#### Machine Learning
+* **scikit-learn**
+  * preparação de dados  
+  * divisão treino/teste  
+  * modelos base (Logistic Regression, Random Forest, etc.)
+
+#### Avaliação de modelos
+* **sklearn.metrics**
+  * accuracy  
+  * precision  
+  * recall  
+  * F1-score  
+  * ROC-AUC 
 
 ## 2. Exploração (Milestone 2)
 ### Limpeza e Preparação
