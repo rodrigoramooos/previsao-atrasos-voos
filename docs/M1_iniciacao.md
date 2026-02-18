@@ -4,12 +4,11 @@
 porque é que este problema é relevante no momento atual.]
 ## 2. Objetivos SMART
 *Desenvolver um modelo preditivo capaz de antecipar atrasos em voos comerciais com base em dados históricos operacionais.*
-* **S - Specific:** [Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).]
-* **M - Measurable:** [Avaliar o desempenho do modelo através de Accuracy, F1-score, ...]
-* **A - Achievable:** [Utilização de dataset real com 1M+ de registos.]
-* **R - Relevant:** [Aplicação direta em logística aérea e otimização operacional.]
-* **T - Time-bound:** [Desenvolvimento do modelo e avaliação até ao final da unidade curricular.]
-clustering.]
+* **S - Specific:** Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).
+* **M - Measurable:** Avaliar o desempenho do modelo através de Accuracy, F1-score, ...
+* **A - Achievable:** Utilização de dataset real com 1M+ de registos.
+* **R - Relevant:** Aplicação direta em logística aérea e otimização operacional.
+* **T - Time-bound:** Desenvolvimento do modelo e avaliação até ao final da unidade curricular.
 ## 3. Metodologia de Gestão (PBL)
 * **Divisão de Tarefas:**
 * **Membro A:** Responsável pela Engenharia de Dados.
