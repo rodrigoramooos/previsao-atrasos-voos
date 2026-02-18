@@ -44,21 +44,17 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 #### Manipulação e preparação de dados
 * **pandas** — carregamento, limpeza e transformação de dados.
 * **numpy** — operações numéricas e manipulação de arrays. 
-
 #### Análise exploratória de dados (EDA)
 * **scipy** — análise estatística  
-
 #### Visualização de dados
 * **matplotlib** — gráficos base  
 * **seaborn** — visualizações estatísticas  
 * **plotly** — gráficos interativos  
-
 #### Machine Learning
 * **scikit-learn**
   * preparação de dados  
   * divisão treino/teste  
   * modelos base (Logistic Regression, Random Forest, etc.)
-
 #### Avaliação de modelos
 * **sklearn.metrics**
   * accuracy  
