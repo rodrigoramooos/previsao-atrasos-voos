@@ -6,7 +6,7 @@ Este projeto baseia-se no dataset Flight Delay and Cancellation Data (1 Million+
 
 O problema principal consiste em prever se um determinado voo irá sofrer atraso ou será cancelado, com base em dados históricos. Trata-se de um problema de classificação supervisionada, podendo também ser explorado como regressão no caso da previsão do número de minutos de atraso. A solução requer a análise e preparação dos dados, identificação de padrões temporais e operacionais e aplicação de algoritmos de aprendizagem automática adequados.
 
-Este problema é relevante no momento atual pois existe a necessidade de decisões baseadas em dados no setor da aviação. A capacidade de prever atrasos e cancelamentos permite melhorar o planeamento operacional, reduzir custos associados e aumentar a satisfação dos passageiros através de comunicação e gestão mais eficazes. Assim, este projeto demonstra como técnicas de ciência de dados podem contribuir para a otimização de operações num setor altamente dinâmico e competitivo.
+Este problema é relevante no momento atual pois existe a necessidade de tomar decisões baseadas em dados no setor da aviação. A capacidade de prever atrasos e cancelamentos permite melhorar o planeamento operacional, reduzir custos associados e aumentar a satisfação dos passageiros através de comunicação e gestão mais eficazes. Assim, este projeto demonstra como técnicas de ciência de dados podem contribuir para a otimização de operações num setor altamente dinâmico e competitivo.
 
 ## 2. Objetivos SMART
 *Desenvolver um modelo preditivo capaz de antecipar atrasos em voos comerciais com base em dados históricos operacionais.*
