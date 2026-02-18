@@ -3,10 +3,12 @@
 [Expandir a descrição do README. Explicar o contexto do setor (ex: retalho, banca, saúde) e
 porque é que este problema é relevante no momento atual.]
 ## 2. Objetivos SMART
-*Defina os objetivos do projeto seguindo a lógica SMART (Específico, Mensurável, Atingível,
-Relevante e Temporal):*
-1. **Objetivo 1:** [Ex: Reduzir o erro de previsão de stock em 15% até ao final do semestre.]
-2. **Objetivo 2:** [Ex: Identificar os 5 principais perfis de consumo através de técnicas de
+*Desenvolver um modelo preditivo capaz de antecipar atrasos em voos comerciais com base em dados históricos operacionais.*
+* **S - Specific:** [Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).]
+* **M - Measurable:** [Avaliar o desempenho do modelo através de Accuracy, F1-score, ...]
+* **A - Achievable:** [Utilização de dataset real com 1M+ de registos.]
+* **R - Relevant:** [Aplicação direta em logística aérea e otimização operacional.]
+* **T - Time-bound:** [Desenvolvimento do modelo e avaliação até ao final da unidade curricular.]
 clustering.]
 ## 3. Metodologia de Gestão (PBL)
 * **Divisão de Tarefas:**
