@@ -1,7 +1,13 @@
 # Milestone 1: Iniciação e Definição do Projeto
 ## 1. Descrição Detalhada do Problema
-[Expandir a descrição do README. Explicar o contexto do setor (ex: retalho, banca, saúde) e
-porque é que este problema é relevante no momento atual.]
+O transporte aéreo é um elemento essencial da mobilidade global, suportando atividades económicas, turismo e comércio internacional. Apesar do elevado nível de planeamento e tecnologia envolvido na aviação comercial, os atrasos e cancelamentos de voos continuam a ocorrer com frequência, afetando passageiros, companhias aéreas e aeroportos. Estas ocorrências geram impactos operacionais e financeiros significativos, tornando-se um problema relevante tanto do ponto de vista económico como logístico.
+
+Este projeto baseia-se no dataset Flight Delay and Cancellation Data (1 Million+ 2024), disponibilizado no Kaggle, que contém mais de um milhão de registos de voos comerciais em companhias aéreas dos Estados Unidos realizados em 2024 . O conjunto de dados inclui informação operacional como horários programados, aeroportos de origem e destino, companhia aérea, distância do voo e indicadores de atraso e cancelamento.
+
+O problema principal consiste em desenvolver um modelo preditivo capaz de prever se um determinado voo irá sofrer atraso ou será cancelado, com base em dados históricos. Trata-se de um problema de classificação supervisionada, podendo também ser explorado como regressão no caso da previsão do número de minutos de atraso. A solução requer a análise e preparação dos dados, identificação de padrões temporais e operacionais e aplicação de algoritmos de aprendizagem automática adequados.
+
+Este problema é relevante no momento atual pois existe a necessidade de decisões baseadas em dados no setor da aviação. A capacidade de prever atrasos e cancelamentos permite melhorar o planeamento operacional, reduzir custos associados e aumentar a satisfação dos passageiros através de comunicação e gestão mais eficazes. Assim, este projeto demonstra como técnicas de ciência de dados podem contribuir para a otimização de operações num setor altamente dinâmico e competitivo.
+
 ## 2. Objetivos SMART
 *Desenvolver um modelo preditivo capaz de antecipar atrasos em voos comerciais com base em dados históricos operacionais.*
 * **S - Specific:** Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).
