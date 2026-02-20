@@ -16,12 +16,19 @@ Este problema é relevante no momento atual pois existe a necessidade de tomar d
 * **R - Relevant:** Aplicação direta em logística aérea e otimização operacional.
 * **T - Time-bound:** Desenvolvimento do modelo e avaliação até ao final da unidade curricular.
 
-## 3. Metodologia de Gestão (PBL)
+## 3. Perguntas de Investigação
+* 1. Quais os principais fatores que contribuem para o atraso de voos?
+* 2. É possível prever com precisão se um voo irá atrasar antes da sua partida?
+* 3. Existem padrões temporais (hora do dia, dia da semana, estação) associados a maiores probabilidades de atraso?
+* 4. Certas companhias aéreas ou aeroportos apresentam maior probabilidade de atrasos?
+* 5. Que variáveis têm maior influência na ocorrência de atrasos e de que forma contribuem para a sua previsão?
+
+## 4. Metodologia de Gestão (PBL)
 * **Rodrigo Ramos:** Responsável pelo setup da infraestrutura (GitHub/Kaggle), Engenharia e Visualização de Dados.
 * **Bruno Almeida:** Responsável pela escrita de documentação técnica e modelação estatística.
 * **Ferramentas de Colaboração:** GitHub Projects para KanBan e reuniões frequentes pelo Discord ou TeamSpeak.
 
-## 4. Análise de Viabilidade dos Dados
+## 5. Análise de Viabilidade dos Dados
 ### Disponibilidade
 O dataset **Flight Delay and Cancellation Data (1 Million+ 2024)** encontra-se disponível publicamente na plataforma [Kaggle](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data).
 
@@ -103,7 +110,7 @@ Assim:
 ---
 
 
-## 5. Cronograma Interno
+## 6. Cronograma Interno
 | Fase | Data Limite | Entregável Esperado |
 | :--- | :--- | :--- |
 | M1: Iniciação | 24/02 | Repositório estruturado e Plano de Projeto. |
