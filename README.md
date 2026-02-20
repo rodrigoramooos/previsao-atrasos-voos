@@ -1,4 +1,4 @@
-# [Previsão de Atrasos em Voos (Logística e Transporte]
+# [Previsão de Atrasos em Voos (Logística e Transporte)]
 
 ## Identificação da Equipa
 * **Grupo nº:** [1]
