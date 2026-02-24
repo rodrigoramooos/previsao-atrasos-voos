@@ -43,19 +43,19 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 * 5. Que variáveis têm maior influência na ocorrência de atrasos e de que forma contribuem para a sua previsão?
 ### Ferramentas e bibliotecas Python
 #### Manipulação e preparação de dados
-* **pandas** — carregamento, limpeza e transformação de dados.
-* **numpy** — operações numéricas e manipulação de arrays. 
+* **pandas** — Carregamento, limpeza e transformação de dados.
+* **numpy** — Operações numéricas e manipulação de arrays. 
 #### Análise exploratória de dados (EDA)
-* **scipy** — análise estatística  
+* **scipy** — Testes estatísticos e validação de hipóteses  
 #### Visualização de dados
-* **matplotlib** — gráficos base  
-* **seaborn** — visualizações estatísticas  
-* **plotly** — gráficos interativos  
+* **matplotlib** — Criação de gráfico base e customização
+* **seaborn** — Visualização de dados estatísticos complexos
+* **plotly** — Dashboards e gráficos interativos  
 #### Machine Learning
 * **scikit-learn**
-  * preparação de dados  
-  * divisão treino/teste  
-  * modelos base (Logistic Regression, Random Forest, etc.)
+  * Pré-processamento e normalização
+  * Divisão de dados (Train/Test Split)  
+  * Implementação de modelos (Logistic Regression, Random Forest, etc.)
 #### Avaliação de modelos
 * **sklearn.metrics**
   * accuracy  
