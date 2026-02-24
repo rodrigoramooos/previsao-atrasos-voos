@@ -14,10 +14,11 @@ A estrutura deste projeto segue as boas práticas de Ciência de Dados e Engenha
 * **`src/`**: Código-fonte modular (scripts `.py`) para funções reutilizáveis.
 * **`reports/`**: Relatórios finais, apresentações e exportação de figuras (`figures/`).
 * **`requirements.txt`**: Ficheiro de configuração com as bibliotecas necessárias.
+* **`README.md`**: Guia principal do projeto.
 
 ## 1. Iniciação (Milestone 1)
 ### Contexto e Problema de Negócio
-Este projeto baseia-se na previsão de atrasos e cancelamento de voos comerciais, recorrendo a técnicas de ciência de dados e aprendizagem automática aplicadas a dados reais de operações aéreas.
+Este projeto baseia-se na previsão de atrasos e cancelamento de voos comerciais, recorrendo a técnicas de ciência de dados e aprendizagem automática aplicadas a dados reais de operações aéreas. Através do processamento de dados reais de operações aéreas de 2024, o objetivo é criar um modelo capaz de antecipar disrupções, permitindo uma melhor gestão logística e operaciona e uma diminuição dos custos associados.
 ### Relevância do Projeto
 Os atrasos em voos têm impacto direto em:
 * Eficiência operacional das companhias aéreas
