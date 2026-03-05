@@ -4,10 +4,8 @@ ficheiro `docs/M1_iniciacao.md`. Caso precise de consultar o significado origina
 deve consultar essa Milestone.
 ## 1. Análise Exploratória de Dados (EDA)
 ### 1.1. Distribuição da Variável Alvo
-*Descrevam como se comporta a variável que querem prever. Está equilibrada? Segue uma distribuição
-normal?*
-> **Factos importantes:** (Ex: "A nossa variável alvo 'Churn' está desequilibrada, com 80% de
-clientes ativos e 20% que saíram.")
+*A nossa variável alvo é a cancelled, que indica se um voo foi ou não cancelado. Esta variável apresenta muito desequilíbrio , o que é normal em problemas de deteção de falhas ou eventos raros na aviação. Por ser uma variável binária, segue uma distribuição de Bernoulli altamente assimétrica.*
+> **Factos importantes:** A variável alvo está desequilibrada, com 1025269 voos operados ou seja 97,78% (Classe 0) e apenas 23306 de voos cancelados, o que se traduz em 2,22% (Classe 1).
 ### 1.2. Correlações Relevantes
 *Quais as variáveis que têm maior relação com o problema? Incluam referências a gráficos que
 geraram no Kaggle.*
