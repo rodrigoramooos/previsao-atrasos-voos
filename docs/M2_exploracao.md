@@ -7,12 +7,12 @@ deve consultar essa Milestone.
 *A nossa variável alvo é a cancelled, que indica se um voo foi ou não cancelado. Esta variável apresenta muito desequilíbrio , o que é normal em problemas de deteção de falhas ou eventos raros na aviação. Por ser uma variável binária, segue uma distribuição de Bernoulli altamente assimétrica.*
 > **Factos importantes:** A variável alvo está desequilibrada, com 1025269 voos operados ou seja 97,78% (Classe 0) e apenas 23306 de voos cancelados, o que se traduz em 2,22% (Classe 1).
 ### 1.2. Correlações Relevantes
-*Quais as variáveis que têm maior relação com o problema? Incluam referências a gráficos que
-geraram no Kaggle.*
-* **Atributo A vs. Alvo:** (Ex: "Notámos que quanto maior a idade, menor a probabilidade de
-cancelamento.")
-* **Atributo B vs. Alvo:** (Ex: "O tipo de contrato mensal está fortemente ligado à saída de
-clientes.")
+* **Atributo Origin (Aeroporto) vs. Alvo:** Notámos que a operação está muito concentrada em grandes aeroportos (como ATL e DFW), implica que a infraestrutura e o volume de tráfego do aeroporto de origem têm maior influência na probabilidade de disrupção do que a rota em si, assim influenciando os voos cancelados.
+(Referência: Gráfico de Barras "Top 10 Aeroportos de Origem")
+* **Atributo Weather Delay vs. Alvo:** Foi observado que a grande maioria dos voos apresenta weather_delay = 0 e que os cancelamentos se concentram exclusivamente neste grupo. Isto quer dizer que o atraso meteorológico registado é uma informação posterior ao evento (só existe se o voo operou), não sendo utilizada como causa direta detetável para prever o cancelamento no momento da partida.
+(Referência: Countplot "Cancelamento vs Existência de Weather Delay")
+* **Atributo Distance vs. Alvo:** Através da visualização por Violin Plot, verificamos que a distribuição da distância percorrida é idêntica para voos realizados e cancelados. Isto indica que a distância (distância da rota agendada) não possui uma relação linear ou determinante com a probabilidade de um voo ser cancelado, sendo este evento mais dependente de fatores externos ou operacionais do que da extensão da rota.
+(Referência: Violin Plot "Distribuição da Distância por Cancelamento")
 ## 2. Qualidade dos Dados e Limpeza
 ### 2.1. Tratamento de Dados em Falta (Missing Data)
 * **Colunas afetadas:** [Lista de colunas]
