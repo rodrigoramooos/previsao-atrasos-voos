@@ -15,9 +15,14 @@ deve consultar essa Milestone.
 (Referência: Violin Plot "Distribuição da Distância por Cancelamento")
 ## 2. Qualidade dos Dados e Limpeza
 ### 2.1. Tratamento de Dados em Falta (Missing Data)
-* **Colunas afetadas:** [Lista de colunas]
-* **Estratégia adotada:** (Ex: "Substituímos os nulos da coluna 'Salário' pela mediana para
-evitar o impacto de outliers.")
+* **Colunas afetadas:** [air_time, wheels_on, taxi_in, taxi_out, wheels_off e dep_time]
+* **Estratégia adotada:** Foi usada uma estratégia de segmentação e preservação
+
+1. Identificação de Causa: Através da análise dos dados em falta, conseguimos verificar que os valores nulos não são erros, mas sim consequências de voos cancelados. Por exemplo, a variável dep_time apresenta 96,77% de nulos quando o voo é cancelado.
+
+2. Segmentação: Criámos o df_clean apenas com voos operados para análises de performance, onde a percentagem de missing caiu para menos de 1% (ex: air_time com apenas 0,23%), assim concluimos que os valores nulos estão diretamente relacionados com voos não efetuados.
+
+3. Justificação: Decidimos não substituir os valores nulos pela média/mediana porque os nulos são informativos. No modelo preditivo, estas variáveis serão tratadas como indicadores de cancelamento e não como "dados em falta" assim preservando os valores nulos.
 ### 2.2. Outliers e Inconsistências
 *Descrevam se encontraram valores impossíveis (ex: idade = 200) e como os resolveram.*
 ## 3. Engenharia de Atributos (Feature Engineering)
