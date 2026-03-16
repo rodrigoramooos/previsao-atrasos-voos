@@ -23,8 +23,25 @@ deve consultar essa Milestone.
 2. Segmentação: Criámos o df_clean apenas com voos operados para análises de performance, onde a percentagem de missing caiu para menos de 1% (ex: air_time com apenas 0,23%), assim concluimos que os valores nulos estão diretamente relacionados com voos não efetuados.
 
 3. Justificação: Decidimos não substituir os valores nulos pela média/mediana porque os nulos são informativos. No modelo preditivo, estas variáveis serão tratadas como indicadores de cancelamento e não como "dados em falta" assim preservando os valores nulos.
-### 2.2. Outliers e Inconsistências
-*Descrevam se encontraram valores impossíveis (ex: idade = 200) e como os resolveram.*
+
+### 2.2. Remoção de Registos Duplicados
+1. Identificação: Foram detetados 7.401 registos duplicados, o que representa aproximadamente 0,7% do dataset original.
+
+2. Estratégia adotada: Eliminação total das linhas repetidas, mantendo apenas a primeira ocorrência de cada registo.
+
+3. Justificação: Na aviação comercial cada voo é um evento único definido por tempo, rota e avião. A existência de duplicados indica erros de processamento de dados e a sua manutenção poderia causar _overfitting_ do modelo de Machine Learning.
+
+### 2.3. Outliers e Inconsistências
+1. Identificação de Valores Impossíveis (Erros Físicos):
+Para detetar valores impossíveis calculámos a velocidade média de cada voo em km/h com base na distância (distance) e no tempo no ar (air_time), identificando 23 registos com valores fisicamente impossíveis para a aviação comercial. Encontrámos casos de velocidades supersónicas e casos de extrema lentidão.
+
+* Estes 23 registos foram eliminados do dataset pois estes casos representam erros de integridade de dados (falhas de digitação, de sensores ou acumulação de tempos no sistema) e não eventos reais. Manter estes dados impossíveis introduziria ruído matemático, prejudicando a capacidade de aprendizagem do modelo preditivo.
+
+2. Identificação de Outliers Operacionais (Valores Extremos Reais):
+Através da análise de Boxplots e do método IQR, detetámos valores extremos nas variáveis relacionadas com o tempo das operações, como o late_aircraft_delay (atrasos acumulados) e tempos de pista (taxi_out / taxi_in), com valores a chegar aos 300 e 400 minutos.
+
+* Todos estes outliers operacionais foram mantidos porque ao contrário de um avião a 7.000 km/h, um atraso de 5 horas na aviação é um cenário possível e que acontece. Como o objetivo primário deste projeto é precisamente prever atrasos e cancelamentos, remover estes valores extremos significaria eliminar os exemplos mais importantes que o modelo precisa de aprender.
+
 ## 3. Engenharia de Atributos (Feature Engineering)
 ### 3.1. Transformações Realizadas
 * **Encoding:** (Ex: "Convertemos a variável 'Género' em numérica usando One-Hot Encoding.")
