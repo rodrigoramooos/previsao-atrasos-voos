@@ -44,27 +44,11 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 4. Existem diferenças significativas na taxa de cancelamento entre aeroportos de origem e estados, e estas diferenças são captadas pelo modelo?
 5. A inclusão de variáveis operacionais (ex.: taxi_out, air_time, delays) melhora o desempenho preditivo dos modelos quando comparado com modelos base?
 ### Ferramentas e bibliotecas Python
-#### Manipulação e preparação de dados
 * **pandas** — Carregamento, limpeza e transformação de dados.
 * **numpy** — Operações numéricas e manipulação de arrays. 
-#### Análise exploratória de dados (EDA)
-* **scipy** — Testes estatísticos e validação de hipóteses  
-#### Visualização de dados
 * **matplotlib** — Criação de gráfico base e customização
 * **seaborn** — Visualização de dados estatísticos complexos
-* **plotly** — Dashboards e gráficos interativos  
-#### Machine Learning
-* **scikit-learn**
-  * Pré-processamento e normalização
-  * Divisão de dados (Train/Test Split)  
-  * Implementação de modelos (Logistic Regression, Random Forest, etc.)
-#### Avaliação de modelos
-* **sklearn.metrics**
-  * accuracy  
-  * precision  
-  * recall  
-  * F1-score  
-  * ROC-AUC 
+
 
 ## 2. Exploração (Milestone 2)
 ### Limpeza e Preparação
