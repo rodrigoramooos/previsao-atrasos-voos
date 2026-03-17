@@ -1,10 +1,10 @@
-# [Previsão de Atrasos em Voos (Logística e Transporte)]
+# Análise e Previsão de Atrasos e Cancelamentos de Voos Comerciais
 
 ## Identificação da Equipa
-* **Grupo nº:** [1]
-* **Membros:**
- * Rodrigo Ramos - a2023137922
- * Bruno Almeida - a2023143583
+- **Grupo nº:** 1  
+- **Membros:**
+  - Rodrigo Ramos — a2023137922  
+  - Bruno Almeida — a2023143583  
 
 ## Organização do Repositório
 A estrutura deste projeto segue as boas práticas de Ciência de Dados e Engenharia de Software:
@@ -18,7 +18,9 @@ A estrutura deste projeto segue as boas práticas de Ciência de Dados e Engenha
 
 ## 1. Iniciação (Milestone 1)
 ### Contexto e Problema de Negócio
-Este projeto baseia-se na previsão de atrasos e cancelamento de voos comerciais, recorrendo a técnicas de ciência de dados e aprendizagem automática aplicadas a dados reais de operações aéreas. Através do processamento de dados reais de operações aéreas de 2024, o objetivo é criar um modelo capaz de antecipar disrupções, permitindo uma melhor gestão logística e operaciona e uma diminuição dos custos associados.
+Este projeto tem como objetivo prever atrasos e cancelamentos em voos comerciais, recorrendo a técnicas de ciência de dados e aprendizagem automática aplicadas a dados reais de operações aéreas.
+O problema identificado prende-se com a dificuldade em antecipar disrupções operacionais no setor da aviação, que impactam negativamente a eficiência das companhias aéreas, a gestão aeroportuária e a experiência dos passageiros.
+Através da análise de dados reais de voos realizados em 2024, pretende-se desenvolver um modelo preditivo capaz de identificar padrões associados a atrasos e cancelamentos, permitindo apoiar a tomada de decisão, melhorar o planeamento operacional e reduzir custos logísticos.
 ### Relevância do Projeto
 Os atrasos em voos têm impacto direto em:
 * Eficiência operacional das companhias aéreas
@@ -27,20 +29,20 @@ Os atrasos em voos têm impacto direto em:
 * Planeamento de rotas e alocação de recursos
 A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir custos e melhorar a qualidade do serviço.
 ### Objetivos SMART do Projeto
-* **S - Specific:** [Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).]
-* **M - Measurable:** [Avaliar o desempenho do modelo através de Accuracy, F1-score, ...]
-* **A - Achievable:** [Utilização de dataset real com 1M+ de registos.]
-* **R - Relevant:** [Aplicação direta em logística aérea e otimização operacional.]
-* **T - Time-bound:** [Desenvolvimento do modelo e avaliação até ao final da unidade curricular.]
+- **S (Specific):** Prever se um voo será cancelado ou sofrerá atraso significativo (≥15 minutos), com base em dados históricos de operações aéreas.
+- **M (Measurable):** Avaliar o desempenho dos modelos através de métricas como Accuracy, Precision, Recall e F1-score, comparando diferentes algoritmos de machine learning.
+- **A (Achievable):** Utilização de um dataset real com mais de 1 milhão de registos, adequado à aplicação de técnicas de análise de dados e modelação preditiva.
+- **R (Relevant):** Contribuir para a melhoria da eficiência operacional no setor da aviação, apoiando a tomada de decisão e a redução de custos associados a atrasos e cancelamentos.
+- **T (Time-bound):** Desenvolver, treinar e avaliar os modelos preditivos até ao final da unidade curricular.
 ### Fonte de Dados
 * **Dataset:** (https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data)
 * **Dimensão:** [1.048.575 linhas, 18 colunas]
 ### Perguntas de Investigação
-* 1. Quais os principais fatores que contribuem para o atraso de voos?
-* 2. É possível prever com precisão se um voo irá atrasar antes da sua partida?
-* 3. Existem padrões temporais (hora do dia, dia da semana, estação) associados a maiores probabilidades de atraso?
-* 4. Certas companhias aéreas ou aeroportos apresentam maior probabilidade de atrasos?
-* 5. Que variáveis têm maior influência na ocorrência de atrasos e de que forma contribuem para a sua previsão?
+1. Quais as variáveis com maior importância na previsão de atrasos e cancelamentos de voos, de acordo com os modelos de machine learning utilizados?
+2. É possível prever o cancelamento de um voo antes da sua partida com desempenho satisfatório (ex.: F1-score superior a 0.70)?
+3. Variáveis temporais (hora do dia, dia da semana, mês) apresentam impacto significativo na probabilidade de cancelamento ou atraso de voos?
+4. Existem diferenças significativas na taxa de cancelamento entre aeroportos de origem e estados, e estas diferenças são captadas pelo modelo?
+5. A inclusão de variáveis operacionais (ex.: taxi_out, air_time, delays) melhora o desempenho preditivo dos modelos quando comparado com modelos base?
 ### Ferramentas e bibliotecas Python
 #### Manipulação e preparação de dados
 * **pandas** — Carregamento, limpeza e transformação de dados.
