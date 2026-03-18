@@ -69,12 +69,27 @@ do método ganho de informação]
 [Resumo da solução e como ela gera valor para o negócio.]
 ### Recomendações de Inovação
 1. [Sugestão prática baseada nos resultados]
+
+## Fonte de Dados
+* **Dataset:** [Flight Delay and Cancellation Data (Kaggle)](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data)
+* **Dimensão do Dataset:** 1.048.575 linhas | 18 colunas
+* **Fonte do código:** [Link para o Notebook](https://www.kaggle.com/code/rodrigoramooos/projeto-previs-o-de-atraso-e-cancelamento-de-voos)
+
+## Referências
+
+
 ## Como Reproduzir este Projeto
 1. Clone o repositório: `git clone [url-do-repo]`
 2. Instale as dependências: `pip install -r requirements.txt`
 3. Execute os notebooks na pasta `notebooks/` seguindo a ordem numérica.
 
-**Instituição:** Coimbra Business School | ISCAC
-**Curso:** Licenciatura em Ciência de Dados para a Gestão
+**Instituição:** [Coimbra Business School | ISCAC](https://www.iscac.pt)  
+
+**Curso:** Licenciatura em Ciência de Dados para a Gestão  
+
 **Unidade Curricular:** Projeto em Ciência de Dados
-**Professor Responsável:** Dora Melo (dmelo@iscac.pt) 
+
+**Docente Responsável:** Dora Melo (dmelo@iscac.pt)  
+
+**Ano Letivo:** 2025/2026
+
