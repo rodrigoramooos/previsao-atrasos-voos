@@ -73,7 +73,7 @@ do método ganho de informação]
 ## Fonte de Dados
 * **Dataset:** [Flight Delay and Cancellation Data (Kaggle)](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data)
 * **Dimensão do Dataset:** 1.048.575 linhas | 18 colunas
-* **Fonte do código:** [Link para o Notebook](https://www.kaggle.com/code/rodrigoramooos/projeto-previs-o-de-atraso-e-cancelamento-de-voos)
+* **Fonte do código:** [Link para o Notebook](https://www.kaggle.com/code/rodrigoramooos/projeto-previsao-de-atraso-e-cancelamento-de-voos)
 
 ## Referências
 
