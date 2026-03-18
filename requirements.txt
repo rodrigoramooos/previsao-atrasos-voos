@@ -1,8 +1,10 @@
-numpy
-pandas
-scipy
-matplotlib
-seaborn
-plotly
-scikit-learn
-sklearn.metrics
+# Processamento e Manipulação de Dados
+numpy          # Computação numérica e manipulação de arrays multidimensionais
+pandas         # Carregamento, limpeza e análise estruturada de dados (DataFrames)
+
+# Visualização de Dados
+matplotlib     # Biblioteca base para a criação de gráficos e visualizações estáticas
+seaborn        # Visualização de dados estatísticos baseada em Matplotlib (gráficos complexos)
+
+# Machine Learning e Modelação
+scikit-learn   # Ferramentas para modelação preditiva, incluindo pré-processamento e métricas de avaliação
