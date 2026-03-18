@@ -77,6 +77,11 @@ do método ganho de informação]
 
 ## Referências
 
+### Citação do Dataset e Bases Oficiais
+* **Nadeem, A. (2024).** *Flight Delay & Cancellation Data (1 Million+ 2024)*. Kaggle. [Link para o Dataset](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024).
+* **Bureau of Transportation Statistics (BTS). (2024).** *Marketing Carrier On-Time Performance Data*. U.S. Department of Transportation. [Link para a origem dos dados](https://transtats.bts.gov/Marketing_Monthly.aspx5ry_lrn4=FDFH&N44_Qry=E&5ry_Pn44vr4=DDD&5ry_Nv42146=DDD&heY_fryrp6lrn4=FDFI&heY_fryrp6Z106u=EE)
+
+
 
 ## Como Reproduzir este Projeto
 1. Clone o repositório: `git clone [url-do-repo]`
