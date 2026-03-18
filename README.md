@@ -36,7 +36,8 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 - **T (Time-bound):** Desenvolver, treinar e avaliar os modelos preditivos até ao final da unidade curricular.
 ### Fonte de Dados
 * **Dataset:** (https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data)
-* **Dimensão:** [1.048.575 linhas, 18 colunas]
+* **Kaggle Code:** (https://www.kaggle.com/code/rodrigoramooos/projeto-previs-o-de-atraso-e-cancelamento-de-voos)
+* **Dimensão do Dataset:** [1.048.575 linhas, 18 colunas]
 ### Perguntas de Investigação
 1. Quais as variáveis com maior importância na previsão de atrasos e cancelamentos de voos, de acordo com os modelos de machine learning utilizados?
 2. É possível prever o cancelamento de um voo antes da sua partida com desempenho satisfatório (ex.: F1-score superior a 0.70)?
