@@ -49,15 +49,30 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 * **numpy** — Operações numéricas e manipulação de arrays. 
 * **matplotlib** — Criação de gráfico base e customização
 * **seaborn** — Visualização de dados estatísticos complexos
+* **scikit-learn** — Pré-processamento de dados e desenvolvimento de modelos de Machine Learning.
 
 
 ## 2. Exploração (Milestone 2)
+
 ### Limpeza e Preparação
-* [Breve resumo das ações de limpeza tomadas. Detalhes em `docs/M2_exploracao.md`]
+* Foram analisados e interpretados os valores em falta, verificando-se que estes estão maioritariamente associados a voos cancelados, sendo por isso mantidos como informação relevante.  
+* Foram removidos registos duplicados e valores fisicamente impossíveis, garantindo a integridade dos dados.  
+* Variáveis com risco de *data leakage* (ex: `weather_delay`, `taxi_out`, `late_aircraft_delay`) foram excluídas do conjunto de modelação por não estarem disponíveis no momento da previsão.  
+* Foi realizada seleção de atributos e criação de novas variáveis, como `is_long_flight` e `flight_period`, com o objetivo de melhorar a capacidade explicativa do dataset.  
+* Detalhes completos disponíveis em `docs/M2_exploracao.md`.
+
+---
+
 ### Principais Conclusões (EDA)
-> *Dica: Insere aqui o gráfico mais importante do projeto.*
-* **Ponto-chave:** [Ex: Identificámos que o fator X influencia em 40% o resultado Y, por aplicação
-do método ganho de informação]
+
+<img width="812" height="494" alt="image" src="https://github.com/user-attachments/assets/0d78763a-f8ed-4378-8667-11626d6b371f" />
+
+
+                                                (Figura 1 - Distribuição da variável alvo `cancelled`)
+
+* A variável alvo apresenta um forte desequilíbrio (≈97,8% voos não cancelados vs ≈2,2% cancelados), o que implica a utilização de métricas adequadas na modelação.  
+* Algumas variáveis inicialmente disponíveis não são adequadas para previsão por introduzirem *data leakage*, sendo necessária uma seleção cautelosa de atributos. 
+* Variáveis como a distância, de forma isolada, não permitem distinguir claramente voos cancelados e não cancelados, evidenciando a necessidade de engenharia de atributos e combinação de variáveis.  
 
 ## 3. Modelação (Milestone 3)
 ### Abordagem Técnica
