@@ -47,9 +47,10 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 ### Ferramentas e bibliotecas Python
 * **pandas** — Carregamento, limpeza e transformação de dados.
 * **numpy** — Operações numéricas e manipulação de arrays. 
-* **matplotlib** — Criação de gráfico base e customização
-* **seaborn** — Visualização de dados estatísticos complexos
+* **matplotlib** — Criação de gráficos base e customização.
+* **seaborn** — Visualização de dados estatísticos.
 * **scikit-learn** — Pré-processamento de dados e desenvolvimento de modelos de Machine Learning.
+* **os** — Interação com o sistema de ficheiros, nomeadamente para verificação do tamanho dos ficheiros gerados.
 
 
 ## 2. Exploração (Milestone 2)
