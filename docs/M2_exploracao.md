@@ -1,65 +1,209 @@
 # Milestone 2: Análise Exploratória e Engenharia de Atributos
+
 > **Nota de Revisão:** Este documento pressupõe que o dataset já foi identificado e descrito no
 ficheiro `docs/M1_iniciacao.md`. Caso precise de consultar o significado original das variáveis,
 deve consultar essa Milestone.
+
+---
+
 ## 1. Análise Exploratória de Dados (EDA)
+
 ### 1.1. Distribuição da Variável Alvo
-*A nossa variável alvo é a cancelled, que indica se um voo foi ou não cancelado. Esta variável apresenta muito desequilíbrio , o que é normal em problemas de deteção de falhas ou eventos raros na aviação. Por ser uma variável binária, segue uma distribuição de Bernoulli altamente assimétrica.*
-> **Factos importantes:** A variável alvo está desequilibrada, com 1025269 voos operados ou seja 97,78% (Classe 0) e apenas 23306 de voos cancelados, o que se traduz em 2,22% (Classe 1).
+
+A variável alvo considerada neste projeto é `cancelled`, que indica se um voo foi cancelado (1) ou não (0). Trata-se de uma variável binária que apresenta um forte desequilíbrio entre classes, característico de situações em que se tenta identificar ocorrências pouco frequentes.
+
+> **Factos importantes:**  
+A variável alvo encontra-se fortemente desequilibrada, com 1 025 269 voos não cancelados (97,78%) e apenas 23 306 voos cancelados (2,22%).
+
+**Breve Conclusão**  
+A forte desproporção entre classes indica um problema de classificação, sendo necessário considerar métricas adequadas (como recall, precision ou F1-score) na fase de modelação, uma vez que a accuracy, isoladamente, poderá conduzir a interpretações enganadoras.
+
+---
+
 ### 1.2. Correlações Relevantes
-* **Atributo Origin (Aeroporto) vs. Alvo:** Notámos que a operação está muito concentrada em grandes aeroportos (como ATL e DFW), implica que a infraestrutura e o volume de tráfego do aeroporto de origem têm maior influência na probabilidade de disrupção do que a rota em si, assim influenciando os voos cancelados.
-(Referência: Gráfico de Barras "Top 10 Aeroportos de Origem")
-* **Atributo Weather Delay vs. Alvo:** Foi observado que a grande maioria dos voos apresenta weather_delay = 0 e que os cancelamentos se concentram exclusivamente neste grupo. Isto quer dizer que o atraso meteorológico registado é uma informação posterior ao evento (só existe se o voo operou), não sendo utilizada como causa direta detetável para prever o cancelamento no momento da partida.
-(Referência: Countplot "Cancelamento vs Existência de Weather Delay")
-* **Atributo Distance vs. Alvo:** Através da visualização por Violin Plot, verificamos que a distribuição da distância percorrida é idêntica para voos realizados e cancelados. Isto indica que a distância (distância da rota agendada) não possui uma relação linear ou determinante com a probabilidade de um voo ser cancelado, sendo este evento mais dependente de fatores externos ou operacionais do que da extensão da rota.
-(Referência: Violin Plot "Distribuição da Distância por Cancelamento")
+
+Nesta fase foram analisadas relações entre variáveis explicativas e a variável alvo, com base em visualizações e estatística descritiva.
+
+#### Atributo `origin` (Aeroporto) vs. Alvo
+
+Verificou-se que o número de voos está fortemente concentrado em grandes aeroportos, como ATL e DFW, o que indica que a infraestrutura aeroportuária e o volume de tráfego podem influenciar a probabilidade de ocorrência de certas perturbações.
+
+
+
+<img width="867" height="514" alt="image" src="https://github.com/user-attachments/assets/6790fd62-658b-43fb-b995-b41e2becf9bb" />
+
+
+                                            (Figura 1 - Gráfico "Top 10 Aeroportos de Origem")
+
+**Breve Conclusão**  
+Os aeroportos de maior dimensão concentram a maioria das observações, o que sugere que fatores operacionais associados a grandes aeroportos podem influenciar a ocorrência de cancelamentos.
+
+---
+
+#### Atributo `weather_delay` vs. Alvo
+
+Observou-se que a maioria dos voos apresenta `weather_delay = 0` e que os cancelamentos se concentram maioritariamente neste grupo.
+Isto indica que esta variável representa informação posterior ao voo (ou seja, apenas existe se o voo ocorreu), não sendo adequada para prever cancelamentos.
+
+
+
+<img width="679" height="447" alt="image" src="https://github.com/user-attachments/assets/0dedd03e-ca4a-421d-a269-ea0706947a3f" />
+
+
+                                            (Figura 2 - Countplot "Cancelamento vs Weather Delay")
+
+**Breve Conclusão**  
+A variável `weather_delay` não apresenta utilidade para o problema em análise, uma vez que constitui uma variável de natureza "pós-evento", ou seja, que apenas apresenta informação posterior ao voo, introduzindo risco de fuga de informação (*data leakage*) caso fosse utilizada na modelação.
+
+---
+
+#### Atributo `distance` vs. Alvo
+
+A análise da variável distância revelou uma forte sobreposição entre as distribuições de voos cancelados e não cancelados.
+
+
+
+<img width="836" height="504" alt="image" src="https://github.com/user-attachments/assets/caca6107-599e-4a0f-af55-41effbdc5770" />
+
+
+                                            (Figura 3 - Strip Plot "Distância vs Cancelamento")
+
+**Breve Conclusão**  
+A análise da relação entre a distância e o cancelamento evidencia uma sobreposição significativa entre voos cancelados e não cancelados, não sendo possível identificar um padrão claro de separação entre as classes com base nesta variável. Verifica-se que os voos não cancelados apresentam maior dispersão ao longo das diferentes distâncias, enquanto os voos cancelados seguem uma distribuição semelhante, ainda que com menor frequência. Assim, conclui-se que a distância, de forma isolada, apresenta uma capacidade discriminativa limitada, sendo necessário combiná-la com outras variáveis para melhorar o desempenho dos modelos.
+
+---
+
+#### Atributo `month` vs. Alvo
+
+A análise temporal revelou variações na taxa de cancelamento entre os meses disponíveis no dataset.
+
+
+
+<img width="833" height="456" alt="image" src="https://github.com/user-attachments/assets/7dd8d6b3-c8ef-4117-b8d6-b29d0f5ddece" />
+
+
+                                            (Figura 4 - Gráfico "Taxa de Cancelamento por Mês")
+
+**Breve Conclusão**  
+Verifica-se uma diferença significativa na taxa de cancelamento entre os meses analisados, sendo esta consideravelmente mais elevada no mês 1 do que no mês 2. No entanto, dado que o conjunto de dados não inclui a totalidade dos meses do ano, esta variação deve ser interpretada com cautela, não sendo possível, nesta fase, identificar padrões sazonais consistentes.
+
+---
+
 ## 2. Qualidade dos Dados e Limpeza
+
 ### 2.1. Tratamento de Dados em Falta (Missing Data)
-* **Colunas afetadas:** [air_time, wheels_on, taxi_in, taxi_out, wheels_off e dep_time]
-* **Estratégia adotada:** Foi usada uma estratégia de segmentação e preservação
 
-1. Identificação de Causa: Através da análise dos dados em falta, conseguimos verificar que os valores nulos não são erros, mas sim consequências de voos cancelados. Por exemplo, a variável dep_time apresenta 96,77% de nulos quando o voo é cancelado.
+**Colunas afetadas:**  
+`air_time`, `wheels_on`, `taxi_in`, `taxi_out`, `wheels_off`, `dep_time`
 
-2. Segmentação: Criámos o df_clean apenas com voos operados para análises de performance, onde a percentagem de missing caiu para menos de 1% (ex: air_time com apenas 0,23%), assim concluimos que os valores nulos estão diretamente relacionados com voos não efetuados.
+**Estratégia adotada:** abordagem orientada pela interpretação contextual dos dados, tendo em conta o enquadramento e o significado das variáveis analisadas.
 
-3. Justificação: Decidimos não substituir os valores nulos pela média/mediana porque os nulos são informativos. No modelo preditivo, estas variáveis serão tratadas como indicadores de cancelamento e não como "dados em falta" assim preservando os valores nulos.
+1. **Identificação da causa:**  
+Os valores nulos não representam erros, mas sim consequências de voos cancelados (por exemplo, `dep_time` não existe quando o voo não ocorre).
+
+2. **Segmentação:**  
+Para efeitos de análise exploratória, foram consideradas separadamente as observações correspondentes a voos operados e a voos cancelados, permitindo avaliar o comportamento das variáveis operacionais apenas nos casos em que estas estão efetivamente disponíveis.
+
+3. **Justificação:**  
+Os valores nulos foram mantidos no conjunto de dados, uma vez que, no contexto das variáveis operacionais, estão associados à não realização do voo. Assim, em vez de serem tratados como falhas a apontar, estes valores foram interpretados como informação relevante para o problema em análise.
+
+---
 
 ### 2.2. Remoção de Registos Duplicados
-1. Identificação: Foram detetados 7.401 registos duplicados, o que representa aproximadamente 0,7% do dataset original.
 
-2. Estratégia adotada: Eliminação total das linhas repetidas, mantendo apenas a primeira ocorrência de cada registo.
+- Foram identificados 7 401 registos duplicados (~0,7% do dataset).
+- Foram removidos todos os valores duplicados na totalidade.
 
-3. Justificação: Na aviação comercial cada voo é um evento único definido por tempo, rota e avião. A existência de duplicados indica erros de processamento de dados e a sua manutenção poderia causar _overfitting_ do modelo de Machine Learning.
+**Justificação:**  
+Cada voo representa um evento único. A presença de registos duplicados indica problemas de integridade dos dados e pode vir a introduzir "desigualdade" na aprendizagem do modelo, aumentando o risco de overfitting.
+
+---
 
 ### 2.3. Outliers e Inconsistências
-1. Identificação de Valores Impossíveis (Erros Físicos):
-Para detetar valores impossíveis calculámos a velocidade média de cada voo em km/h com base na distância (distance) e no tempo no ar (air_time), identificando 23 registos com valores fisicamente impossíveis para a aviação comercial. Encontrámos casos de velocidades supersónicas e casos de extrema lentidão.
 
-* Estes 23 registos foram eliminados do dataset pois estes casos representam erros de integridade de dados (falhas de digitação, de sensores ou acumulação de tempos no sistema) e não eventos reais. Manter estes dados impossíveis introduziria ruído matemático, prejudicando a capacidade de aprendizagem do modelo preditivo.
+#### Erros físicos
 
-2. Identificação de Outliers Operacionais (Valores Extremos Reais):
-Através da análise de Boxplots e do método IQR, detetámos valores extremos nas variáveis relacionadas com o tempo das operações, como o late_aircraft_delay (atrasos acumulados) e tempos de pista (taxi_out / taxi_in), com valores a chegar aos 300 e 400 minutos.
+- Foram identificados 23 registos com velocidades impossíveis (ex: velocidades supersónicas).
+- Estes registos foram removidos.
 
-* Todos estes outliers operacionais foram mantidos porque ao contrário de um avião a 7.000 km/h, um atraso de 5 horas na aviação é um cenário possível e que acontece. Como o objetivo primário deste projeto é precisamente prever atrasos e cancelamentos, remover estes valores extremos significaria eliminar os exemplos mais importantes que o modelo precisa de aprender.
+**Justificação:**  
+Tratam-se de erros de medição ou registo, não representando fenómenos que efetivamente aconteceram.
+
+---
+
+#### Outliers Operacionais
+
+- Foram identificados valores extremos em variáveis como `late_aircraft_delay`, `taxi_in` e `taxi_out`.
+- Estas variáveis não foram incluídas no dataset final de modelação.
+
+**Justificação:**  
+Embora representem situações reais e informativas, estas variáveis apenas estão disponíveis durante ou após a realização do voo, não sendo uteis no momento da previsão. A sua inclusão traria fuga de informação (*data leakage*), comprometendo a veracidade e a consistência dos resultados obtidos pelo modelo.
+
+---
 
 ## 3. Engenharia de Atributos (Feature Engineering)
+
 ### 3.1. Transformações Realizadas
-* **Encoding:** (Ex: "Convertemos a variável 'Género' em numérica usando One-Hot Encoding.")
-* **Escalonamento:** (Ex: "Aplicámos o StandardScaler nas variáveis numéricas para que todas
-fiquem na mesma escala.")
-### 3.2. Criação de Novos Atributos
-*Descrevam as variáveis que criaram para ajudar o modelo.*
-* **Nova Variável [Nome]:** (Ex: "Criámos a 'Tenure_Per_Year' que divide o tempo de contrato
-pela idade do cliente.")
-## 4. Dicionário de Dados Final (Pós-Processamento)
-*Listagem final das variáveis que serão entregues ao modelo na Fase 3.*
-| Atributo | Tipo | Descrição |
-| :--- | :--- | :--- |
-| `cliente_id` | ID | Removido (não preditivo) |
-| `idade_norm` | Float | Idade após normalização |
-| `is_premium` | Binary | 1 para clientes com plano superior |
-## 5. Conclusões da Fase de Exploração
-*O que aprenderam sobre o dataset que não sabiam no final do Milestone 1? Os dados são suficientes
-para avançar para a modelação?*
+
+- **Encoding:** Aplicação de One-Hot Encoding (técnica que transforma uma variável categórica em várias variáveis binárias (0 ou 1)), por exemplo na variável `origin`.
+- **Normalização:** Aplicação de normalização nas variáveis numéricas.
+
 ---
-*Data de última atualização: [DD/MM/AAAA]* 
+
+### 3.2. Criação de Novos Atributos
+
+Foram criadas novas variáveis com potencial relevância para a modelação:
+
+- **`is_long_flight`**  
+  Indicador binário que identifica voos de longa distância, assumindo o valor 1 para voos com distância superior a 1500 km e 0 caso contrário.  
+  O valor 1500 foi definido com base na distribuição da variável distância, permitindo distinguir de forma simples voos de curta e longa duração no contexto do dataset.
+
+- **`flight_period`**  
+  Segmentação do dia em períodos (madrugada, manhã, tarde, noite).
+
+Estas variáveis permitem capturar padrões não evidentes nas variáveis originais.
+
+---
+
+## 4. Seleção de Atributos
+
+Foi feita uma "versão" do dataset focada em variáveis disponíveis antes da partida do voo, evitando fuga de informação (*data leakage*).
+
+**Variáveis removidas:**
+- Operacionais: `dep_time`, `taxi_out`, `wheels_off`, etc.
+- Pós-evento: `weather_delay`, `late_aircraft_delay`
+- Redundantes: `fl_date`, `year`, `origin_city_name`
+
+**Justificação:**  
+Estas variáveis não estão disponíveis no momento da previsão ou introduzem redundância.
+
+---
+
+## 5. Dicionário de Dados Final
+
+| Atributo | Tipo | Descrição |
+|----------|------|----------|
+| `month` | int64 | Mês do voo |
+| `day_of_month` | int64 | Dia do mês |
+| `day_of_week` | int64 | Dia da semana |
+| `origin` | object | Aeroporto de origem |
+| `distance` | float64 | Distância do voo |
+| `is_long_flight` | int64 | Indicador de voo longo |
+| `cancelled` | int64 | Variável alvo |
+
+---
+
+## 6. Conclusões da Fase de Exploração
+
+A análise exploratória permitiu compreender melhor a estrutura, qualidade e limitações do dataset, destacando-se os seguintes aspetos:
+
+- Forte desíquilibrio da variável alvo, típico de problemas de eventos raros, exigindo especial atenção na escolha das métricas de avaliação a utilizar
+- Existência de variáveis com risco de *data leakage*, cuja remoção foi essencial para garantir a "veracidade" dos modelos  
+- Presença de outliers operacionais que, embora extremos, representam situações reais e relevantes para o problema  
+- Necessidade de criação de novas variáveis, uma vez que algumas das variáveis originais, por si só, não permitem distinguir de forma evidente, voos cancelados e não cancelados
+
+Adicionalmente, verificou-se que nem todas as variáveis disponíveis contribuem de forma direta para a previsão do cancelamento, sendo necessário um processo cauteloso de seleção de atributos. Observou-se também que algumas relações podem ser influenciadas por limitações do próprio dataset, como a cobertura temporal incompleta. De forma global, os dados, após a limpeza e preparação, apresentam qualidade suficiente para avançar para a fase de modelação.
+
+---
+
+*Data de última atualização: 24/03/2026*
