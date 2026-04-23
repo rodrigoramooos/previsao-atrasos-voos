@@ -76,9 +76,59 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 * Variáveis como a distância, de forma isolada, não permitem distinguir claramente voos cancelados e não cancelados, evidenciando a necessidade de engenharia de atributos e combinação de variáveis.  
 
 ## 3. Modelação (Milestone 3)
-### Abordagem Técnica
-* **Modelos:** [Ex: Random Forest e XGBoost]
-* **Métrica Principal:** [Ex: F1-Score ou RMSE]
+
+### Síntese Executiva do Modelo
+
+**Modelo Final:**  
+O modelo selecionado foi o **HistGradient Boosting**, destacando-se pela sua capacidade de capturar padrões complexos e pela consistência de desempenho face às restantes abordagens testadas.
+
+**Métrica Principal:**  
+Foi utilizado o **F1-Score da classe `cancelled`**, por se tratar de um problema com forte desbalanceamento, onde a deteção correta de cancelamentos é crítica.
+
+**Desempenho-Chave:**  
+O modelo apresenta um desempenho equilibrado, com capacidade para identificar uma parte relevante dos voos com risco de cancelamento, mantendo simultaneamente uma boa capacidade discriminativa global.
+
+**Impacto Prático:**  
+A principal utilidade do modelo está na redução de **falsos negativos**, ou seja, casos em que um voo é previsto como operacional mas acaba por ser cancelado.  
+
+Na prática, isto permite antecipar situações críticas e apoiar a tomada de decisão operacional. O aumento de falsos positivos é um compromisso aceitável, uma vez que corresponde apenas a alertas preventivos adicionais.
+
+**Interpretação do Modelo:**  
+As previsões são influenciadas sobretudo por variáveis operacionais relacionadas com o funcionamento dos voos, nomeadamente:
+- Horário de partida  
+- Tempos de taxi (saída e chegada)  
+- Distância do voo  
+- Tempo em solo  
+
+Estes fatores refletem padrões reais de congestionamento e eficiência operacional.
+
+---
+
+### Visualização Final
+
+**Matriz de Confusão**  
+
+> Objetivo: ilustrar a capacidade do modelo em distinguir voos cancelados de não cancelados, evidenciando os principais tipos de erro.
+
+<img width="695" height="490" alt="image" src="https://github.com/user-attachments/assets/69c337c8-5b82-446b-b459-a8d139c687cf" />
+
+
+---
+
+**Análise de Erros por Variáveis Temporais**  
+
+> Objetivo: avaliar como o desempenho do modelo varia ao longo do tempo (por mês e dia da semana), identificando padrões de erro e contextos onde a deteção de cancelamentos é mais ou menos eficaz.
+
+<img width="1590" height="985" alt="image" src="https://github.com/user-attachments/assets/3351811d-926a-4586-9e27-561f89c53eac" />
+
+
+---
+
+### Conclusão
+
+O modelo desenvolvido constitui uma solução funcional para apoio à decisão, permitindo identificar padrões relevantes associados ao cancelamento de voos.  
+
+Apesar das limitações inerentes à natureza dos dados, apresenta utilidade prática e uma base sólida para futuras melhorias, nomeadamente através da integração de novas fontes de informação.
 
 ## 4. Finalização (Milestone 4)
 ### Resposta ao Problema
