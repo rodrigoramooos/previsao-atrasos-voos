@@ -3,11 +3,15 @@ numpy          # Computação numérica e manipulação de arrays multidimension
 pandas         # Carregamento, limpeza e análise estruturada de dados (DataFrames)
 
 # Visualização de Dados
-matplotlib     # Biblioteca base para a criação de gráficos e visualizações estáticas
-seaborn        # Visualização de dados estatísticos baseada em Matplotlib (gráficos complexos)
+matplotlib     # Criação de gráficos e visualizações estáticas
+seaborn        # Visualização de dados estatísticos (gráficos mais avançados)
 
 # Machine Learning e Modelação
-scikit-learn   # Ferramentas para modelação preditiva, incluindo pré-processamento e métricas de avaliação
+scikit-learn   # Modelação preditiva, métricas, validação cruzada e otimização
+xgboost        # Algoritmo de boosting avançado para dados tabulares
+
+# Otimização e Validação
+joblib         # Paralelização e gestão de execução (usado internamente em CV/GridSearch)
 
 # Sistema de Ficheiros
-os             # Interação com o sistema de ficheiros (ex.: verificação do tamanho dos ficheiros)
+os             # Interação com o sistema de ficheiros
