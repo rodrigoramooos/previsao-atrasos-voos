@@ -17,7 +17,7 @@ O ponto de partida simples, para definir o patamar mínimo de desempenho que qua
  
 **Algoritmo:** Regressão Logística (`class_weight='balanced'`, `max_iter=1000`, `random_state=42`)
  
-**Resultado:**
+**Resultado (Threshold = 0.50):**
  
 | Métrica | Classe 0 (não cancelado) | Classe 1 (cancelado) |
 | :--- | :---: | :---: |
@@ -25,10 +25,11 @@ O ponto de partida simples, para definir o patamar mínimo de desempenho que qua
 | Recall | 0.61 | 0.80 |
 | F1-Score | 0.76 | 0.06 |
 
+**AUC-ROC:** 0.7601  
 
-AUC-ROC - 0.7601 
+**Nota adicional:** Foi realizada otimização de threshold, tendo sido identificado um valor ótimo de **0.70**, com F1-score em validação de **0.0834**, demonstrando que mesmo com ajuste do limiar o modelo continua limitado estruturalmente.
  
-**Análise:** O F1-Score de **0.06** para a classe de cancelamentos revela que o modelo Baseline é incapaz de gerar previsões positivas fiáveis. Este resultado era esperado: a Regressão Logística assume **relações lineares** entre as variáveis preditoras e a probabilidade de cancelamento. A *accuracy* global de 0.61, inferior ao classificador trivial (que ao prever sempre 0 atingiria 0.98), resulta do balanceamento de pesos que desloca as previsões em favor da classe minoritária, gerando muitos Falsos Positivos e degradando a Precisão para 0.03. Este modelo **falha o objetivo de negócio** e serve apenas como referencial de comparação mínimo para as fases seguintes.
+**Análise:** O F1-Score de **0.06** para a classe de cancelamentos revela que o modelo Baseline é incapaz de gerar previsões positivas fiáveis. Este resultado era esperado: a Regressão Logística assume **relações lineares** entre as variáveis preditoras e a probabilidade de cancelamento. A *accuracy* global de 0.61, inferior ao classificador trivial (que ao prever sempre 0 atingiria 0.98), resulta do balanceamento de pesos que desloca as previsões em favor da classe minoritária, gerando muitos Falsos Positivos e degradando a Precisão para 0.03.
  
 ---
  
@@ -41,40 +42,48 @@ AUC-ROC - 0.7601
 - **Árvore de Decisão** — modelo interpretável e simples de analisar; serve de referência intermédia entre o Baseline e os algoritmos ensemble.
 - **Random Forest** — ensemble de árvores com amostragem aleatória de variáveis (*feature bagging*), reduzindo a variância face a uma árvore individual.
 - **Extra Trees** (*Extremely Randomized Trees*) — variante do Random Forest com maior aleatoriedade nos pontos de divisão, frequentemente mais rápida e com boa capacidade de generalização.
-Todos os modelos foram configurados com `class_weight='balanced_subsample'` (Random Forest e Extra Trees) ou `class_weight='balanced'` (Árvore de Decisão) para mitigar o desequilíbrio de classes, e com `random_state=42` para garantir reprodutibilidade.
+- **HistGradient Boosting** — algoritmo de boosting baseado em histogramas, altamente eficiente para grandes volumes de dados e capaz de capturar relações complexas.
+- **Logistic Regression Calibrated** — versão calibrada do baseline para melhorar a estimativa probabilística.
+- **XGBoost** — algoritmo de boosting avançado, conhecido pelo elevado desempenho em problemas tabulares.
+  
+**Tabela comparativa de desempenho (validação com threshold otimizado):**
  
-**Tabela comparativa de desempenho (conjunto de teste):**
+| Algoritmo | Threshold | F1-Score | Notas |
+| :--- | :---: | :---: | :--- |
+| Regressão Logística *(Baseline)* | 0.70 | 0.0834 | Referencial mínimo |
+| Árvore de Decisão | 0.85 | 0.1530 | Melhor entre modelos simples |
+| Random Forest | 0.62 | 0.1475 | Estável mas inferior à árvore |
+| Extra Trees | 0.60 | 0.1440 | Desempenho semelhante ao RF |
+| HistGradient Boosting | 0.09 | **0.2023** | Melhor desempenho global |
+| Logistic Regression Calibrated | 0.04 | 0.0866 | Pequena melhoria face ao baseline |
  
-| Algoritmo | Parâmetros Base | Accuracy | Recall | F1-Score | AUC-ROC | Notas |
-| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| Regressão Logística *(Baseline)* | class_weight=balanced | 0.61 | 0.80 | 0.06 | 0.7601 | Referencial mínimo |
-| Árvore de Decisão | max_depth=12, min_samples_leaf=20 | 0.71 | 0.8434 | 0.08 | 0.8369 | Melhor F1; gap treino-teste mínimo |
-| Random Forest | n_estimators=120, max_depth=15 | 0.67 | 0.8419 | 0.07 | 0.8373 | Maior accuracy global; a aguardar métricas completas |
-| Extra Trees | n_estimators=120, max_depth=15 | 0.67 | 0.8444 | 0.07 | 0.8341 | Desempenho semelhante ao Random Forest |
+**Algoritmo Vencedor:** O **HistGradient Boosting** destacou-se de forma clara, com:
+- **F1-Score:** 0.1925 (teste)
+- **Recall:** 0.2279  
+- **ROC-AUC:** 0.8737  
+
+Este modelo apresenta uma melhoria substancial face a todos os restantes, especialmente na capacidade de equilíbrio entre precisão e recall.
  
-**O algoritmo que se destacou:** A **Árvore de Decisão** obteve o melhor F1-Score (0.08) e Recall (0.84) nesta fase inicial de comparação, com um gap treino-teste mínimo (F1: 0.0847 treino vs. 0.0815 teste), o que demonstra boa capacidade de generalização sem overfitting severo. O Random Forest e o Extra Trees apresentam *accuracy* superior, mas carecem ainda de análise aprofundada das métricas por classe.
+**O algoritmo que falhou:** A **Regressão Logística** (Baseline), mesmo com calibração, continua a demonstrar incapacidade estrutural para modelar o problema.
  
-**O algoritmo que falhou:** A **Regressão Logística** (Baseline) falhou inequivocamente, confirmando que a hipótese de linearidade é incompatível com a complexidade deste problema.
- 
-**Diagnóstico de generalização — treino vs. teste (Árvore de Decisão):**
+**Diagnóstico de generalização — HistGradient Boosting:**
  
 | Conjunto | Accuracy | Precision | Recall | F1-Score | AUC-ROC |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| Treino | 0.7093 | 0.0445 | 0.8804 | 0.0847 | 0.8648 |
-| Teste | 0.7097 | 0.0428 | 0.8434 | 0.0815 | 0.8369 |
-| Diferença | +0.0004 | +0.0017 | +0.0370 | +0.0032 | +0.0279 |
+| Treino | 0.9848 | 0.7619 | 0.0063 | 0.0125 | 0.8876 |
+| Teste | 0.9848 | 0.7241 | 0.0066 | 0.0131 | 0.8734 |
+| Diferença | ≈0.0000 | +0.0378 | -0.0003 | -0.0006 | +0.0142 |
  
-A diferença de F1-Score entre treino e teste é de apenas **0.003**, demonstrando a ausência de overfitting severo. O AUC-ROC em teste (0.8369) é substancialmente superior ao Baseline (0.7601), confirmando uma melhoria real na capacidade discriminativa do modelo.
+Apesar da forte capacidade discriminativa (ROC-AUC elevado), observa-se um **F1-score extremamente baixo**, evidenciando um comportamento de **subajuste severo** no threshold padrão, reforçando a importância crítica da otimização do limiar de decisão.
  
-**Curvas de aprendizagem (5-fold CV, F1-Score):**
- 
-| Conjunto | F1-Score médio final |
-| :--- | :---: |
-| Treino | 0.0859 |
-| Validação | 0.0813 |
-| Gap | 0.0046 |
- 
-As curvas de aprendizagem revelam um comportamento globalmente estável, com bandas de variância estreitas e convergência progressiva das curvas à medida que aumenta o volume de dados de treino. O gap reduzido entre treino e validação confirma a robustez do modelo e indica que o aumento de dados de treino contribui positivamente para a generalização. O F1-Score baixo em ambos os conjuntos (≈0.08) é um sinal de **subajuste moderado** da Árvore de Decisão com os parâmetros atuais.
+**Curvas de aprendizagem e diagnóstico:**
+
+As curvas de aprendizagem e análise de métricas confirmam:
+- Boa capacidade discriminativa (ROC-AUC elevado)
+- Forte sensibilidade ao threshold
+- Necessidade de otimização orientada ao objetivo de negócio
+
+O comportamento global indica que o problema não está apenas no modelo, mas na **definição do limiar de decisão num contexto altamente desequilibrado**.
  
 ---
 ## 3. Otimização (Tuning)
