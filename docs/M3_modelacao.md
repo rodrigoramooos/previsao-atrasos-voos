@@ -51,15 +51,17 @@ O ponto de partida simples, para definir o patamar mínimo de desempenho que qua
 | Algoritmo | Threshold | F1-Score | Notas |
 | :--- | :---: | :---: | :--- |
 | Regressão Logística *(Baseline)* | 0.70 | 0.0834 | Referencial mínimo |
-| Árvore de Decisão | 0.85 | 0.1530 | Melhor entre modelos simples |
-| Random Forest | 0.62 | 0.1475 | Estável mas inferior à árvore |
-| Extra Trees | 0.60 | 0.1440 | Desempenho semelhante ao RF |
-| HistGradient Boosting | 0.09 | **0.2023** | Melhor desempenho global |
-| Logistic Regression Calibrated | 0.04 | 0.0866 | Pequena melhoria face ao baseline |
+| Árvore de Decisão | 0.85 | 0.1475 | Melhor entre modelos simples |
+| Random Forest | 0.62 | 0.1337 | Estável mas inferior à árvore |
+| Extra Trees | 0.60 | 0.1407 | Desempenho semelhante ao RF |
+| HistGradient Boosting | 0.09 | **0.1925** | Melhor desempenho global |
+| Logistic Regression Calibrated | 0.04 | 0.0823 | Pequena melhoria face ao baseline |
+| XGBoost | 0.8022 | 0.01631 | Segundo maior F1-Score|
  
 **Algoritmo Vencedor:** O **HistGradient Boosting** destacou-se de forma clara, com:
 - **F1-Score:** 0.1925 (teste)
-- **Recall:** 0.2279  
+- **Recall:** 0.2279
+- **Precison:** 0.1666
 - **ROC-AUC:** 0.8737  
 
 Este modelo apresenta uma melhoria substancial face a todos os restantes, especialmente na capacidade de equilíbrio entre precisão e recall.
