@@ -54,26 +54,26 @@ A previsão antecipada de atrasos permite apoiar decisões operacionais, reduzir
 
 
 ## 2. Exploração (Milestone 2)
-
 ### Limpeza e Preparação
-* Foram analisados e interpretados os valores em falta, verificando-se que estes estão maioritariamente associados a voos cancelados, sendo por isso mantidos como informação relevante.  
-* Foram removidos registos duplicados e valores fisicamente impossíveis, garantindo a integridade dos dados.  
+* Foram analisados e interpretados os valores em falta, verificando-se que estes estão maioritariamente associados a voos cancelados, sendo por isso mantidos como informação estruturalmente coerente com o problema.  
+* Foram removidos registos duplicados (~7 400) e valores fisicamente impossíveis (~23 registos com velocidades supersónicas), garantindo a integridade dos dados.  
 * Variáveis com risco de *data leakage* (ex: `weather_delay`, `taxi_out`, `late_aircraft_delay`) foram excluídas do conjunto de modelação por não estarem disponíveis no momento da previsão.  
-* Foi realizada seleção de atributos e criação de novas variáveis, como `is_long_flight` e `flight_period`, com o objetivo de melhorar a capacidade explicativa do dataset.  
+* Foi realizada seleção de atributos e criação de novas variáveis — `is_long_flight`, `is_short_flight`, `is_weekend` e `flight_period` — com o objetivo de melhorar a capacidade explicativa do dataset para ambos os problemas de modelação.  
 * Detalhes completos disponíveis em `docs/M2_exploracao.md`.
 
 ---
-
 ### Principais Conclusões (EDA)
 
-<img width="812" height="494" alt="image" src="https://github.com/user-attachments/assets/0d78763a-f8ed-4378-8667-11626d6b371f" />
+<img width="1283" height="541" alt="image" src="https://github.com/user-attachments/assets/e476267a-2599-43bf-8262-31f8e394baf4" />
 
+*(Figura 1 — Distribuição e proporção da variável-alvo `cancelled`)*
 
-                                                (Figura 1 - Distribuição da variável alvo `cancelled`)
+* O projeto prevê **dois problemas de classificação distintos**: cancelamento (`cancelled`) e atraso (`is_delayed`), com características e níveis de desequilíbrio diferentes.  
+* A variável `cancelled` apresenta um forte desequilíbrio (≈97,8% não cancelados vs ≈2,2% cancelados), exigindo métricas adequadas como recall, precision e F1-score na fase de modelação.  
+* A variável `is_delayed` foi construída a partir de `weather_delay + late_aircraft_delay ≥ 15 min` (excluindo voos cancelados), apresentando uma taxa entre 10–20% — menos desequilibrada e mais tratável.  
+* Algumas variáveis inicialmente disponíveis não são adequadas para previsão por introduzirem *data leakage*, sendo necessária uma seleção cautelosa de atributos.  
+* Variáveis como a distância, de forma isolada, não permitem distinguir claramente voos perturbados dos restantes, evidenciando a necessidade de engenharia de atributos e combinação de variáveis.
 
-* A variável alvo apresenta um forte desequilíbrio (≈97,8% voos não cancelados vs ≈2,2% cancelados), o que implica a utilização de métricas adequadas na modelação.  
-* Algumas variáveis inicialmente disponíveis não são adequadas para previsão por introduzirem *data leakage*, sendo necessária uma seleção cautelosa de atributos. 
-* Variáveis como a distância, de forma isolada, não permitem distinguir claramente voos cancelados e não cancelados, evidenciando a necessidade de engenharia de atributos e combinação de variáveis.  
 
 ## 3. Modelação (Milestone 3)
 
