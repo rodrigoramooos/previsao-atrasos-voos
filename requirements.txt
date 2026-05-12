@@ -1,0 +1,34 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Projeto: Previsão de Atraso e Cancelamento de Voos
+# Milestones 1, 2 e 3 — EDA, Limpeza e Modelação
+#
+# Reprodução local:
+#   pip install -r requirements.txt
+#
+# Versões testadas no Kaggle (Python 3.10). Compatível com Python >= 3.9.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Ambiente Jupyter ──────────────────────────────────────────────────────────
+jupyter>=1.0.0
+notebook>=7.0.0
+
+# ── Manipulação de dados ──────────────────────────────────────────────────────
+numpy>=1.26,<2.0
+pandas>=2.2,<3.0
+
+# ── Visualização ─────────────────────────────────────────────────────────────
+matplotlib>=3.9
+seaborn>=0.13
+
+# ── Machine Learning ─────────────────────────────────────────────────────────
+scikit-learn>=1.5         # TunedThresholdClassifierCV requer >= 1.5
+xgboost>=2.0
+
+# ── Explicabilidade ───────────────────────────────────────────────────────────
+shap>=0.45
+
+# ── Persistência de modelos ───────────────────────────────────────────────────
+joblib>=1.4
+
+# ── Ambiente interativo ───────────────────────────────────────────────────────
+ipython>=8.0
