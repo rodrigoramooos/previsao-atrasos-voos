@@ -21,7 +21,7 @@ Ano Letivo: 2025/2026
 |---|---|
 | 🌐 **Página do Projeto** | [projetovoos.live](https://projetovoos.live) |
 | ✈️ **Aplicação FlightSense** | [previsao-cancelamento.streamlit.app](https://previsao-cancelamento.streamlit.app) |
-| 📊 **Notebook EDA (Kaggle)** | [eda-previsao-de-cancelamentos-em-voos](https://www.kaggle.com/code/rodrigoramooos/eda-previsao-de-cancelamentos-em-voos) |
+| 📊 **Notebook EDA (Kaggle)** | [eda-previsao-de-cancelamentos-em-voos](https://www.kaggle.com/code/rodrigoramooos/projeto-previsao-de-atraso-e-cancelamento-de-voos) |
 | 🤖 **Notebook Modelação (Kaggle)** | [modelacao-previsao-de-cancelamentos-em-voos](https://www.kaggle.com/code/rodrigoramooos/modelacao-previsao-de-cancelamentos-em-voos) |
 
 ---
