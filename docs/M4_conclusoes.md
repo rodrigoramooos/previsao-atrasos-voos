@@ -20,7 +20,7 @@ Esses objetivos foram alcançados. Desenvolvemos dois modelos independentes, tre
 ### Interpretação dos Resultados em Linguagem Simples
 
 **Cancelamentos:**  
-O modelo de cancelamentos analisa o *quando* e o *de onde* de um voo e estima a probabilidade de este não chegar a operar. Com um limiar de decisão ajustado (0.806), o modelo consegue identificar corretamente **1 em cada 4 voos que seriam cancelados** — uma capacidade real de antecipação num cenário onde os cancelamentos representam apenas 2.2% do total de voos.
+O modelo de cancelamentos analisa o *quando* e o *de onde* de um voo e estima a probabilidade de este não chegar a operar. Com um limiar de decisão ajustado (0.806), o modelo consegue identificar corretamente **1 em cada 4 voos que seriam cancelados** — uma capacidade real de antecipação num cenário onde os cancelamentos representam apenas 1.53% do total de voos.
 
 **Atrasos:**  
 O modelo de atrasos identifica cerca de **4 em cada 10 voos que chegarão com atraso**, com um nível de precision razoável dado o desequilíbrio existente. Consegue distinguir dias e rotas de maior risco, oferecendo sinais operacionais com antecedência.
@@ -60,7 +60,7 @@ O principal benefício não está na precisão absoluta dos modelos, mas na **re
 
 - **Ausência de dados meteorológicos em tempo real.** Esta é a limitação mais crítica. Fatores como tempestades, nevoeiro ou neve são as principais causas reais de cancelamentos e atrasos, mas não estão disponíveis no dataset antes do voo. O modelo compensa inferirei risco a partir de variáveis temporais e geográficas (mês, aeroporto) que *correlacionam* com mau tempo, mas não o observam diretamente.
 
-- **Desequilíbrio extremo na classe `cancelled` (2.2%).** Apesar das técnicas utilizadas (`class_weight='balanced'`, otimização de threshold por CV), o desequilíbrio limita estruturalmente o F1-score. Num conjunto de teste de 208 231 voos, existem apenas 3 181 cancelamentos — qualquer erro sistemático tem impacto amplificado nas métricas.
+- **Desequilíbrio extremo na classe `cancelled` (1.53%).** Apesar das técnicas utilizadas (`class_weight='balanced'`, otimização de *threshold* por CV), o desequilíbrio limita estruturalmente o F1-*score*. Num conjunto de teste de 208 231 voos, existem apenas 3 181 cancelamentos — qualquer erro sistemático tem impacto amplificado nas métricas.
 
 - **Dataset circunscrito a 2024.** O modelo foi treinado e avaliado num único ano. Não é garantido que os padrões aprendidos (sazonalidade, aeroportos de risco) se mantenham estáveis em anos com dinâmicas diferentes (ex: anos com greves, pandemia, eventos extremos).
 
@@ -138,8 +138,8 @@ As features de aeroporto de origem (variáveis one-hot) introduzem um viés geog
 
 ### Escalabilidade e Deployment
 
-8. **Interface web com Streamlit.**  
-   Desenvolver uma aplicação simples onde o utilizador introduz os detalhes de um voo (aeroporto de origem, data, distância) e obtém a probabilidade de cancelamento/atraso em tempo real, com a explicação SHAP dos principais fatores.
+8. **Interface web com Streamlit — FlightSense (implementado).**  
+   A aplicação *web* **FlightSense** foi desenvolvida e está em produção em [previsao-cancelamento.streamlit.app](https://previsao-cancelamento.streamlit.app). Permite ao utilizador introduzir os detalhes de um voo (aeroporto de origem, mês, dia, distância) e obter a probabilidade de cancelamento e atraso em tempo real, com *dashboard* de análise exploratória e calculadora de impacto económico. Trabalho futuro nesta componente passa pela integração de explicabilidade *SHAP* por voo diretamente na interface.
 
 9. **API REST para integração operacional.**  
    Expor os modelos como um endpoint REST (FastAPI) que sistemas de gestão aeroportuária possam consultar automaticamente para cada voo programado.
@@ -160,10 +160,6 @@ Ainda assim, os resultados obtidos constituem uma base sólida e auditável: os 
 O caminho para um sistema de produção está bem definido: dados meteorológicos, hora de partida e histórico do avião são as três melhorias com maior potencial de impacto. Com esses ingredientes, os modelos aqui desenvolvidos constituem um ponto de partida robusto para uma solução escalável de apoio à decisão no setor da aviação.
 
 ---
-**Data de Conclusão:** [13/05/2026]
-**Versão do Projeto:** v4.0 Final
----
 
 *Coimbra Business School | ISCAC — Licenciatura em Ciência de Dados para a Gestão*  
 *Unidade Curricular: Projeto em Ciência de Dados — Docente: Dora Melo*
----
