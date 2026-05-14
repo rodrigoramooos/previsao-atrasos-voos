@@ -117,7 +117,7 @@ As features de aeroporto de origem (variáveis one-hot) introduzem um viés geog
    Cruzar o dataset com fontes como NOAA ou OpenWeatherMap por aeroporto e data seria a melhoria com maior impacto esperado. Condições climáticas explicam diretamente grande parte dos cancelamentos que o modelo atual apenas infere indiretamente.
 
 2. **Testar técnicas de reamostragem (SMOTE, ADASYN).**  
-   O desequilíbrio da classe `cancelled` (2.2%) foi tratado com `class_weight` e otimização de threshold, mas reamostragem sintética poderia ajudar o modelo a aprender melhores fronteiras de decisão para os casos positivos raros.
+   O desequilíbrio da classe `cancelled` (1.53%) foi tratado com `class_weight` e otimização de threshold, mas reamostragem sintética poderia ajudar o modelo a aprender melhores fronteiras de decisão para os casos positivos raros.
 
 3. **Ensemble stacking (HistGBT + XGBoost).**  
    Os dois algoritmos têm desempenhos muito próximos em ambos os targets. Um meta-modelo de stacking poderia combinar os dois e melhorar a robustez nas zonas de incerteza, especialmente para cancelamentos.
