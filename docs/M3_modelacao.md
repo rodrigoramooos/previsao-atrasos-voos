@@ -267,4 +267,5 @@ A principal mais-valia dos modelos finais reside na capacidade de:
 Em síntese: ambos os modelos estão **tecnicamente validados e operacionalmente úteis como suporte à decisão**, com margem significativa de melhoria condicionada à integração de novas fontes de dados.
 
 ---
-*Data de última atualização: 12/05/2026*
+*Data de última atualização: 14/05/2026*
+
