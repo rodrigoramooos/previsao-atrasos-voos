@@ -22,7 +22,7 @@ Este projeto prevê **dois tipos de perturbação** em voos comerciais, correspo
 A variável `cancelled` indica se um voo foi cancelado (1) ou não (0). Trata-se de uma variável binária que apresenta um forte desequilíbrio entre classes, característico de situações em que se tenta identificar ocorrências pouco frequentes.
 
 > **Factos importantes:**  
-> A variável alvo encontra-se fortemente desequilibrada, com aproximadamente 97,78% de voos não cancelados e apenas 2,22% de voos cancelados.
+> A variável alvo encontra-se fortemente desequilibrada, com aproximadamente 98,47% de voos não cancelados e apenas 1,53% de voos cancelados.
 
 **Breve Conclusão**  
 A forte desproporção entre classes indica um problema de classificação desequilibrado, sendo necessário considerar métricas adequadas (como recall, precision ou F1-score) e técnicas específicas de modelação (class_weight, threshold tuning) na fase de modelação, uma vez que a accuracy, isoladamente, poderá conduzir a interpretações enganadoras.
@@ -38,7 +38,7 @@ A forte desproporção entre classes indica um problema de classificação deseq
 O dataset não contém diretamente uma variável de atraso à partida, pelo que foi definida uma nova variável-alvo `is_delayed`. O critério adotado é: um voo é considerado atrasado se `weather_delay + late_aircraft_delay ≥ 15 minutos` **e** não foi cancelado. Esta definição é conservadora — não capta atrasos por decisão da transportadora, NAS ou segurança, que não estão disponíveis neste dataset.
 
 > **Factos importantes:**  
-> A taxa de atraso situa-se entre 10–20%, tornando este problema menos desequilibrado e mais tratável do que o de cancelamentos. Os dois problemas são maioritariamente mutuamente exclusivos: um voo cancelado não é considerado atrasado nesta definição.
+> A taxa de atraso situa-se em 8,52%, tornando este problema menos desequilibrado e mais tratável do que o de cancelamentos. Os dois problemas são maioritariamente mutuamente exclusivos: um voo cancelado não é considerado atrasado nesta definição.
 
 **Breve Conclusão**  
 A criação da variável `is_delayed` permite expandir o âmbito do projeto para um segundo problema de classificação com características distintas. O menor desequilíbrio face aos cancelamentos simplifica a modelação, embora a definição conservadora adotada implique que parte dos atrasos reais possa não estar capturada.
@@ -183,8 +183,8 @@ Embora representem situações reais e informativas, estas variáveis apenas est
 ### 3.1. Transformações Realizadas
 
 - **Encoding:** Aplicação de One-Hot Encoding (técnica que transforma uma variável categórica em várias variáveis binárias (0 ou 1)), na variável `origin`. Foi utilizado `drop_first=True` para evitar multicolinearidade perfeita.
-- **Normalização:** Aplicação de `StandardScaler` na variável numérica `distance`.
-- **Remoção de multicolinearidade:** Colunas com correlação absoluta superior a 0,85 entre features foram automaticamente identificadas e removidas.
+- **Escalonamento:** Não foi aplicado `StandardScaler` nem qualquer normalização. Os modelos utilizados na fase de modelação (HistGradient Boosting e XGBoost) são baseados em árvores de decisão — invariantes a transformações monotónicas como a normalização — pelo que o escalonamento não produz qualquer benefício e foi deliberadamente omitido.
+- **Remoção de multicolinearidade:** Colunas com correlação absoluta superior a 0,85 entre features foram automaticamente identificadas e removidas. Nenhum par atingiu este limiar no dataset final.
 
 ---
 
@@ -202,10 +202,7 @@ Foram criadas novas variáveis com potencial relevância para ambos os problemas
   Indicador binário que assinala se o voo ocorre ao fim de semana (Sábado ou Domingo), capturando padrões operacionais associados a dias de maior procura de lazer.
 
 - **`flight_period`**  
-  Segmentação do dia em quatro períodos com base na hora de partida: madrugada, manhã, tarde e noite.
-
-- **`ground_time`**  
-  Soma de `taxi_out` e `taxi_in`, representando o tempo total em solo. Esta variável está disponível apenas para voos realizados e não é incluída no conjunto de modelação final, dado o seu carácter pós-evento.
+  Segmentação do dia em quatro períodos com base na hora de partida: madrugada, manhã, tarde e noite. Esta variável é criada e analisada na fase de EDA mas é excluída do conjunto de modelação final, uma vez que a hora de partida real (`dep_time`) não está disponível antes da partida do voo — o que tornaria a sua utilização preditiva inválida.
 
 <img width="1742" height="1080" alt="image" src="https://github.com/user-attachments/assets/dc1c8de4-aed8-4875-b5b6-d9b97aadb122" />
 
@@ -233,16 +230,18 @@ Estas variáveis não estão disponíveis no momento da previsão, são utilizad
 
 | Atributo | Tipo | Descrição |
 |----------|------|-----------|
-| `month` | int64 | Mês do voo |
-| `day_of_month` | int64 | Dia do mês |
-| `day_of_week` | int64 | Dia da semana |
-| `origin` | object | Aeroporto de origem (codificado via One-Hot) |
-| `distance` | float64 | Distância do voo (normalizada) |
-| `is_long_flight` | int64 | Indicador de voo longo (> 1 500 milhas) |
-| `is_short_flight` | int64 | Indicador de voo curto (< 300 milhas) |
-| `is_weekend` | int64 | Indicador de fim de semana |
-| `cancelled` | int64 | Variável-alvo: cancelamento |
-| `is_delayed` | int64 | Variável-alvo: atraso (≥ 15 min, voo não cancelado) |
+| `month` | Numérico inteiro | Mês do voo (1–12) |
+| `day_of_month` | Numérico inteiro | Dia do mês (1–31) |
+| `day_of_week` | Numérico inteiro | Dia da semana (1–7) |
+| `origin_*` | Binário (*one-hot*) | Aeroporto de origem codificado (uma coluna por aeroporto) |
+| `distance` | Numérico real | Distância do voo em milhas (31–5 095) |
+| `is_long_flight` | Binário | Indicador de voo longo (> 1 500 milhas): {0, 1} |
+| `is_short_flight` | Binário | Indicador de voo curto (< 300 milhas): {0, 1} |
+| `is_weekend` | Binário | Indicador de fim de semana: {0, 1} |
+| `cancelled` | Binário | Variável-alvo 1 — cancelamento: {0, 1} |
+| `is_delayed` | Binário | Variável-alvo 2 — atraso ≥ 15 min (voo não cancelado): {0, 1} |
+
+> **Nota:** A variável `flight_period` foi criada e analisada na EDA mas não integra o conjunto de modelação final — a hora de partida real (`dep_time`) não está disponível antes do voo, tornando a sua utilização preditiva inválida.
 
 ---
 
@@ -257,7 +256,7 @@ A análise exploratória permitiu compreender melhor a estrutura, qualidade e li
 - **Capacidade discriminativa limitada de variáveis isoladas** como `distance`, sendo necessária a combinação de múltiplos atributos para distinguir adequadamente as classes.
 - **Padrões temporais identificados** tanto ao nível mensal como semanal para ambas as variáveis-alvo, sugerindo que a dimensão temporal possui relevância preditiva.
 
-Adicionalmente, a criação de novas variáveis (`is_long_flight`, `is_short_flight`, `is_weekend`, `flight_period`) permitiu capturar padrões não evidentes nos atributos originais. De forma global, os dados, após a limpeza e preparação, apresentam qualidade suficiente para avançar para a fase de modelação.
+Adicionalmente, a criação de novas variáveis (`is_long_flight`, `is_short_flight`, `is_weekend`) permitiu capturar padrões não evidentes nos atributos originais. A variável `flight_period` foi criada e analisada na EDA mas excluída do conjunto de modelação, por depender da hora de partida real — não disponível antes do voo. De forma global, os dados, após a limpeza e preparação, apresentam qualidade suficiente para avançar para a fase de modelação.
 
 ---
 
