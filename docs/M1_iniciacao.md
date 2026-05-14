@@ -1,121 +1,158 @@
-# Milestone 1: Iniciação e Definição do Projeto
-## 1. Descrição Detalhada do Problema
-O transporte aéreo é um elemento essencial da mobilidade global, suportando atividades económicas, turismo e comércio internacional. Apesar do elevado nível de planeamento e tecnologia envolvido na aviação comercial, os atrasos e cancelamentos de voos continuam a ocorrer com frequência, afetando passageiros, companhias aéreas e aeroportos. Estas ocorrências geram impactos operacionais e financeiros significativos, tornando-se um problema relevante tanto do ponto de vista económico como logístico.
+# Milestone 1 — Iniciação e Definição do Projeto
 
-Este projeto baseia-se no dataset Flight Delay and Cancellation Data (1 Million+ 2024), disponibilizado no Kaggle, que contém mais de um milhão de registos de voos comerciais em companhias aéreas dos Estados Unidos realizados em 2024 . O conjunto de dados inclui informação como horários programados, aeroportos de origem e destino, distância do voo e indicadores de atraso e cancelamento.
+## 1. Descrição do Problema
 
-O problema principal consiste em prever se um determinado voo irá sofrer atraso ou será cancelado, com base em dados históricos. Trata-se de um problema de classificação supervisionada, podendo também ser explorado como regressão no caso da previsão do número de minutos de atraso. A solução requer a análise e preparação dos dados, identificação de padrões temporais e operacionais e aplicação de algoritmos de aprendizagem automática adequados.
+O transporte aéreo comercial é um setor de elevada complexidade operacional, onde cancelamentos e atrasos de voos geram impactos financeiros significativos para companhias aéreas, aeroportos e passageiros. Nos Estados Unidos, dados do *Bureau of Transportation Statistics* indicam que perturbações operacionais custam anualmente milhares de milhões de dólares à indústria, não só em compensações diretas, mas também em custos de realojamento, afetação de tripulações e deterioração da experiência do passageiro.
 
-Este problema é relevante no momento atual pois existe a necessidade de tomar decisões baseadas em dados no setor da aviação. A capacidade de prever atrasos e cancelamentos permite melhorar o planeamento operacional, reduzir custos associados e aumentar a satisfação dos passageiros através de comunicação e gestão mais eficazes. Assim, este projeto demonstra como técnicas de ciência de dados podem contribuir para a otimização de operações num setor altamente dinâmico e competitivo.
+O problema identificado consiste na ausência de instrumentos preditivos capazes de antecipar, antes da partida, se um determinado voo irá ser cancelado ou sofrer um atraso significativo. A gestão reativa destas perturbações — ou seja, agir apenas após a ocorrência — é operacionalmente ineficaz e economicamente prejudicial. Um sistema de alerta precoce baseado em dados históricos permitiria às companhias aéreas e aeroportos agir com antecedência, reduzindo custos e melhorando o planeamento operacional.
 
-## 2. Objetivos SMART
-*Desenvolver um modelo preditivo capaz de antecipar atrasos em voos comerciais com base em dados históricos operacionais.*
-* **S - Specific:** Prever se um voo irá sofrer atraso significativo (ex.: ≥15 minutos).
-* **M - Measurable:** Avaliar o desempenho do modelo através de Accuracy, F1-score, ...
-* **A - Achievable:** Utilização de dataset real com 1M+ de registos.
-* **R - Relevant:** Aplicação direta em logística aérea e otimização operacional.
-* **T - Time-bound:** Desenvolvimento do modelo e avaliação até ao final da unidade curricular.
+Este projeto tem, portanto, relevância direta para o negócio da aviação comercial: a capacidade de identificar voos em risco antes da partida apoia a tomada de decisão sobre afetação de recursos, comunicação proativa com passageiros e otimização de operações em dias de maior risco — traduzindo técnicas de *machine learning* em valor operacional concreto.
+
+---
+
+## 2. Objetivo SMART
+
+Desenvolver e avaliar dois modelos de classificação binária — um para prever o cancelamento de voo e outro para prever atraso significativo igual ou superior a 15 minutos — utilizando dados históricos de 1 041 151 voos comerciais norte-americanos de 2024, com *ROC-AUC* superior a 0.80 no modelo de cancelamentos e superior a 0.70 no modelo de atrasos, avaliados também por F1-*score* e *Avg Precision* em validação cruzada estratificada com cinco partições, até ao final da unidade curricular de Projeto em Ciência de Dados (maio de 2026).
+
+---
 
 ## 3. Perguntas de Investigação
-* 1. Quais os principais fatores que contribuem para o atraso de voos?
-* 2. É possível prever com precisão se um voo irá atrasar antes da sua partida?
-* 3. Existem padrões temporais (hora do dia, dia da semana, estação) associados a maiores probabilidades de atraso?
-* 4. Certas companhias aéreas ou aeroportos apresentam maior probabilidade de atrasos?
-* 5. Que variáveis têm maior influência na ocorrência de atrasos e de que forma contribuem para a sua previsão?
 
-## 4. Metodologia de Gestão (PBL)
-* **Rodrigo Ramos:** Responsável pelo setup da infraestrutura (GitHub/Kaggle), Engenharia e Visualização de Dados.
-* **Bruno Almeida:** Responsável pela escrita de documentação técnica e modelação estatística.
-* **Ferramentas de Colaboração:** GitHub Projects para KanBan e reuniões frequentes pelo Discord ou TeamSpeak.
+1. Quais as variáveis com maior poder preditivo na previsão de cancelamentos e atrasos, segundo a análise de importância *SHAP*?
+2. É possível construir um classificador de cancelamentos com *ROC-AUC* superior a 0.80, num conjunto de dados com apenas 1.53% de casos positivos, sem acesso a dados meteorológicos em tempo real?
+3. Variáveis temporais como o dia do mês e o mês do ano apresentam impacto relevante nas perturbações operacionais, traduzido em valores *SHAP* positivamente significativos para os modelos?
+4. Aeroportos de origem com menor dimensão operacional apresentam taxas de cancelamento superiores às dos grandes *hubs*, e essa diferença é capturada pelo modelo como variável com importância elevada?
+5. A engenharia de atributos — nomeadamente `is_weekend`, `is_long_flight` e `is_short_flight` — contribui para uma melhoria mensurável do F1-*score* face a um modelo treinado apenas com as variáveis originais?
 
-## 5. Análise de Viabilidade dos Dados
+---
+
+## 4. Ferramentas e Bibliotecas
+
+| Ferramenta / Biblioteca | Versão utilizada | Função no projeto |
+|---|---|---|
+| Python | 3.11 | Linguagem principal |
+| pandas | 2.x | Manipulação e limpeza de dados |
+| scikit-learn | 1.4.x | Pré-processamento, modelação, validação cruzada, `TunedThresholdClassifierCV` |
+| XGBoost | 2.x | Algoritmo de *gradient boosting* para o modelo de atrasos |
+| SHAP | 0.45.x | Interpretabilidade global e local dos modelos |
+| Streamlit | 1.x | Desenvolvimento da aplicação web *FlightSense* |
+| Plotly / Matplotlib / Seaborn | — | Visualização de dados na EDA e nos relatórios |
+| Jupyter Notebook / Kaggle Code | — | Ambiente de desenvolvimento interativo |
+| GitHub | — | Controlo de versões e repositório do projeto |
+
+---
+
+## 5. Metodologia de Gestão
+
+- **Rodrigo Ramos:** Responsável pelo *setup* da infraestrutura (GitHub/Kaggle), engenharia e visualização de dados.
+- **Bruno Almeida:** Responsável pela escrita de documentação técnica e modelação estatística.
+- **Ferramentas de colaboração:** GitHub Projects para gestão de tarefas em *kanban* e reuniões regulares por Discord.
+
+---
+
+## 6. Análise de Viabilidade dos Dados
+
 ### Disponibilidade
-O dataset **Flight Delay and Cancellation Data (1 Million+ 2024)** encontra-se disponível publicamente na plataforma [Kaggle](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data).
 
-- Os dados já foram descarregados e importados para o ambiente Kaggle Code.
-- O repositório encontra-se estruturado com as pastas:
-  - `data/raw/` — armazenamento do dataset original
-  - `data/processed/` — dados após tratamento e transformação
-- O dataset possui **1.048.575 linhas e 18 colunas**, correspondendo a registos individuais de voos comerciais realizados em 2024.
-- Os dados encontram-se em formato **CSV**, sendo adequados para processamento em Python com `pandas`.
+O *dataset* **Flight Delay and Cancellation Data (1 Million+ 2024)** encontra-se disponível publicamente na plataforma [Kaggle](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data), com origem nos registos operacionais do *Bureau of Transportation Statistics* (BTS) do Departamento de Transportes dos EUA.
+
+- Os dados foram descarregados e importados para o ambiente Kaggle Code.
+- O repositório encontra-se estruturado com as pastas `data/raw/` (dataset original) e `data/processed/` (dados pós-tratamento).
+- O *dataset* possui **1 048 575 linhas e 18 colunas**, correspondendo a registos individuais de voos comerciais realizados em 2024.
 
 ---
 
-### Estrutura das Variáveis
+### Dicionário de Variáveis
 
-Após a inspeção inicial (`df.info()`), o dataset contém **18 variáveis**, distribuídas da seguinte forma:
+O *dataset* contém **18 variáveis**, distribuídas da seguinte forma:
 
-#### Variáveis Numéricas
+#### Variáveis Numéricas Inteiras
 
-| Variável | Tipo | Descrição |
-|-----------|------|------------|
-| `year` | int64 | Ano do voo |
-| `month` | int64 | Mês do voo |
-| `day_of_month` | int64 | Dia do mês |
-| `day_of_week` | int64 | Dia da semana (1–7) |
-| `dep_time` | float64 | Hora real de partida (formato HHMM, pode conter nulos) |
-| `taxi_out` | float64 | Tempo (minutos) desde a partida do gate até descolagem |
-| `wheels_off` | float64 | Hora em que o avião descolou |
-| `wheels_on` | float64 | Hora em que o avião aterrou |
-| `taxi_in` | float64 | Tempo (minutos) desde aterragem até ao gate |
-| `cancelled` | int64 | Indicador binário de cancelamento (0 = Não, 1 = Sim) |
-| `air_time` | float64 | Tempo total de voo em minutos |
-| `distance` | int64 | Distância do voo (milhas) |
-| `weather_delay` | int64 | Minutos de atraso atribuídos a condições meteorológicas |
-| `late_aircraft_delay` | int64 | Minutos de atraso devido à chegada tardia da aeronave |
+| Variável | Tipo | Gama de Valores | Descrição |
+|---|---|---|---|
+| `year` | Numérico inteiro | 2024 | Ano do voo |
+| `month` | Numérico inteiro | 1–12 | Mês do voo |
+| `day_of_month` | Numérico inteiro | 1–31 | Dia do mês |
+| `day_of_week` | Numérico inteiro | 1–7 | Dia da semana (1 = segunda-feira) |
+| `distance` | Numérico inteiro | 31–5 095 | Distância do voo em milhas |
+| `cancelled` | Binário | {0, 1} | Indicador de cancelamento (0 = Não, 1 = Sim) — **variável-alvo 1** |
 
----
+#### Variáveis Numéricas Reais (com valores nulos nos voos cancelados)
+
+| Variável | Tipo | Gama de Valores | Descrição |
+|---|---|---|---|
+| `dep_time` | Numérico real | 0001–2359 | Hora real de partida (formato HHMM) |
+| `taxi_out` | Numérico real | 1–250 | Minutos desde a saída do *gate* até descolagem |
+| `wheels_off` | Numérico real | 0001–2359 | Hora de descolagem |
+| `wheels_on` | Numérico real | 0001–2359 | Hora de aterragem |
+| `taxi_in` | Numérico real | 1–200 | Minutos desde aterragem até ao *gate* |
+| `air_time` | Numérico real | 15–700 | Tempo total de voo em minutos |
+| `weather_delay` | Numérico real | 0–600 | Minutos de atraso por condições meteorológicas |
+| `late_aircraft_delay` | Numérico real | 0–1 200 | Minutos de atraso por chegada tardia da aeronave |
 
 #### Variáveis Categóricas
 
 | Variável | Tipo | Descrição |
-|-----------|------|------------|
-| `fl_date` | object | Data completa do voo (necessita conversão para datetime) |
-| `origin` | object | Código do aeroporto de origem |
-| `origin_city_name` | object | Nome da cidade de origem |
-| `origin_state_nm` | object | Estado de origem |
+|---|---|---|
+| `fl_date` | Categórico (data) | Data completa do voo (formato `YYYY-MM-DD`) |
+| `origin` | Categórico nominal | Código IATA do aeroporto de origem (3 letras) |
+| `origin_city_name` | Categórico nominal | Nome da cidade de origem |
+| `origin_state_nm` | Categórico nominal | Estado norte-americano de origem |
+
+#### Variável-Alvo Derivada
+
+A segunda variável-alvo, `is_delayed`, não existe no *dataset* original e foi construída durante o pré-processamento com base em:
+
+```
+is_delayed = 1  se  weather_delay + late_aircraft_delay ≥ 15 minutos  (e voo não cancelado)
+is_delayed = 0  caso contrário
+```
+
+Esta definição exclui voos cancelados e considera apenas atrasos com causa operacional identificada, resultando numa taxa de 8.52% de casos positivos.
 
 ---
 
 ### Qualidade Inicial dos Dados
-A análise preliminar permitiu identificar os seguintes pontos:
 
-- A estrutura do dataset é consistente e adequada para modelação supervisionada.
-- Existem valores nulos em algumas colunas, nomeadamente em variáveis associadas a atrasos ou cancelamentos.
-- As variáveis temporais encontram-se no formato `object`, sendo necessária conversão para `datetime`.
-- Não foram identificadas colunas completamente vazias.
-- Será necessário verificar:
-  - Percentagem de valores nulos por variável;
-  - Existência de registos duplicados;
-  - Possíveis inconsistências (ex.: atrasos negativos);
-  - Distribuição da variável alvo (equilíbrio entre classes).
+A análise preliminar do *dataset* permitiu identificar os seguintes aspetos:
 
-Estas verificações serão aprofundadas na Milestone 2 (Exploração e Preparação dos Dados).
+- **Valores nulos:** presentes em oito variáveis — `dep_time`, `taxi_out`, `wheels_off`, `wheels_on`, `taxi_in`, `air_time`, `weather_delay` e `late_aircraft_delay`. Os nulos em `dep_time` a `air_time` são estruturalmente coerentes: ocorrem nos voos cancelados, onde não existem dados de execução. Os nulos em `weather_delay` e `late_aircraft_delay` indicam ausência de atraso registado.
+- **Duplicados:** identificados e removidos aproximadamente 7 400 registos duplicados.
+- **Anomalias:** cerca de 23 registos com velocidades de cruzeiro fisicamente impossíveis foram removidos como *outliers*.
+- **Desequilíbrio das classes:** a variável `cancelled` apresenta apenas 1.53% de casos positivos; `is_delayed` apresenta 8.52%. Este desequilíbrio exige estratégias específicas de modelação, como `class_weight='balanced'` e validação cruzada estratificada.
+- **Variáveis temporais:** `fl_date`, `month`, `day_of_month` e `day_of_week` encontram-se em formatos `object` ou inteiro, exigindo conversão ou codificação adequada para modelação.
+- **Exclusão por *data leakage*:** variáveis como `taxi_out`, `wheels_off`, `wheels_on`, `taxi_in`, `air_time`, `weather_delay` e `late_aircraft_delay` não estão disponíveis antes da partida do voo e foram excluídas dos modelos preditivos.
 
 ---
 
 ### Ética e Conformidade
 
-O dataset é público e disponibilizado para fins académicos na plataforma Kaggle.
+O *dataset* é público, disponibilizado para fins académicos e de investigação na plataforma Kaggle, com origem em dados governamentais norte-americanos.
 
-- Não contém dados pessoais identificáveis.
-- Não inclui informação sensível relativa a passageiros.
+- Não contém dados pessoais identificáveis nem informação sensível relativa a passageiros.
 - Contém exclusivamente dados operacionais de voos comerciais.
-
-Assim:
-
-- Não existem implicações diretas relacionadas com o RGPD (Regulamento Geral sobre a Proteção de Dados).
-- Os dados encontram-se anonimizados.
+- Não existem implicações diretas relacionadas com o RGPD (Regulamento Geral sobre a Proteção de Dados), uma vez que os dados se encontram completamente anonimizados.
 
 ---
 
+## 7. Cronograma
 
-## 6. Cronograma Interno
-| Fase | Data Limite | Entregável Esperado |
-| :--- | :--- | :--- |
-| M1: Iniciação | 24/02 | Repositório estruturado e Plano de Projeto. |
-| M2: Exploração | [Data] | Notebook de EDA e Dados Processados. |
-| M3: Modelação | [Data] | Comparação de algoritmos e métricas. |
-| M4: Finalização| [Data] | Pitch e Relatório Final. |
+| Fase | Data Limite | Entregável |
+|---|---|---|
+| M1 — Iniciação | 24/02/2026 | Repositório estruturado e plano de projeto |
+| M2 — Exploração | 24/03/2026 | *Notebook* de EDA e dados processados |
+| M3 — Modelação | 28/04/2026 | Comparação de algoritmos e métricas de avaliação |
+| M4 — Conclusões | 26/05/2026 | *Pitch* e relatório final |
+
 ---
-*Data de última atualização: 20/02/2026*
+
+## Referências
+
+- **Nadeem, A. (2024).** *Flight Delay & Cancellation Data (1 Million+ 2024)*. Kaggle. Disponível em: [kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024)
+- **Bureau of Transportation Statistics — BTS. (2024).** *Marketing Carrier On-Time Performance Data*. U.S. Department of Transportation. Disponível em: [transtats.bts.gov](https://www.transtats.bts.gov)
+- **Chen, T., & Guestrin, C. (2016).** XGBoost: A scalable tree boosting system. *Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining*, 785–794. [doi.org/10.1145/2939672.2939785](https://doi.org/10.1145/2939672.2939785)
+- **Pedregosa, F., et al. (2011).** Scikit-learn: Machine learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830. [jmlr.org/papers/v12/pedregosa11a.html](https://jmlr.org/papers/v12/pedregosa11a.html)
+
+---
+
+*Data de última atualização: maio de 2026*
