@@ -88,6 +88,8 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
   color:var(--cyan)!important;font-weight:600!important}
 #MainMenu,footer,header{visibility:hidden!important}
 [data-testid="stDecoration"]{display:none!important}
+[data-testid="collapsedControl"]{display:none!important}
+[data-testid="stSidebarCollapseButton"]{display:none!important}
 .ph{border-left:3px solid var(--cyan);padding:.1rem 0 .1rem 1rem;margin-bottom:.3rem}
 .ph h1{font-family:var(--mono)!important;font-size:1.55rem!important;font-weight:700!important;
   color:var(--tx)!important;letter-spacing:-.02em;margin:0!important}
