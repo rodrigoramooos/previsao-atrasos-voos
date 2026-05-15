@@ -88,11 +88,17 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
 [data-testid="stRadio"] [aria-checked="true"]+label,[data-testid="stRadio"] [aria-checked="true"]~div label{
   color:var(--cyan)!important;font-weight:600!important}
 #MainMenu,footer,header{visibility:hidden!important}
-[data-testid="collapsedControl"]{display:none!important}
-[data-testid="stSidebarCollapseButton"]{display:none!important}
-section[data-testid="stSidebar"]{transform:translateX(0)!important;min-width:244px!important;width:244px!important}
-section[data-testid="stSidebar"][aria-expanded="false"]{margin-left:0!important;transform:translateX(0)!important;display:block!important}
 [data-testid="stDecoration"]{display:none!important}
+@media(min-width:769px){
+  [data-testid="collapsedControl"]{display:none!important}
+  [data-testid="stSidebarCollapseButton"]{display:none!important}
+  section[data-testid="stSidebar"]{transform:translateX(0)!important;min-width:244px!important;width:244px!important}
+  section[data-testid="stSidebar"][aria-expanded="false"]{margin-left:0!important;transform:translateX(0)!important;display:block!important}
+}
+@media(max-width:768px){
+  [data-testid="collapsedControl"]{display:flex!important}
+  [data-testid="stSidebarCollapseButton"]{display:flex!important}
+}
 .ph{border-left:3px solid var(--cyan);padding:.1rem 0 .1rem 1rem;margin-bottom:.3rem}
 .ph h1{font-family:var(--mono)!important;font-size:1.55rem!important;font-weight:700!important;
   color:var(--tx)!important;letter-spacing:-.02em;margin:0!important}
@@ -124,6 +130,7 @@ components.html("""
 <script>
 (function() {
   function keepSidebarOpen() {
+    if (parent.window.innerWidth <= 768) return;
     var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
     if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
       var btn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
