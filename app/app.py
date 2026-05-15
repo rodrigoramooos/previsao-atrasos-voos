@@ -87,9 +87,11 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
 [data-testid="stRadio"] [aria-checked="true"]+label,[data-testid="stRadio"] [aria-checked="true"]~div label{
   color:var(--cyan)!important;font-weight:600!important}
 #MainMenu,footer,header{visibility:hidden!important}
-[data-testid="stDecoration"]{display:none!important}
 [data-testid="collapsedControl"]{display:none!important}
 [data-testid="stSidebarCollapseButton"]{display:none!important}
+section[data-testid="stSidebar"]{transform:translateX(0)!important;min-width:244px!important;width:244px!important}
+section[data-testid="stSidebar"][aria-expanded="false"]{margin-left:0!important;transform:translateX(0)!important;display:block!important}
+[data-testid="stDecoration"]{display:none!important}
 .ph{border-left:3px solid var(--cyan);padding:.1rem 0 .1rem 1rem;margin-bottom:.3rem}
 .ph h1{font-family:var(--mono)!important;font-size:1.55rem!important;font-weight:700!important;
   color:var(--tx)!important;letter-spacing:-.02em;margin:0!important}
@@ -114,16 +116,6 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
 .pv{color:var(--tx);font-weight:500}
 .sf{font-family:var(--mono);font-size:.68rem;color:var(--dim);
   line-height:1.7;border-top:1px solid var(--border);padding-top:.8rem;margin-top:.4rem}
-@media(max-width:768px){
-  .block-container{padding:.8rem .9rem 2rem!important}
-  [data-testid="stHorizontalBlock"]{flex-wrap:wrap!important;gap:.5rem!important}
-  [data-testid="column"]{width:100%!important;flex:1 1 100%!important;min-width:100%!important}
-  [data-testid="stSidebar"]{width:100%!important;min-width:0!important}
-  [data-testid="stForm"]{padding:1rem!important}
-  [data-testid="stMetricValue"]{font-size:1.2rem!important}
-  .ph h1{font-size:1.1rem!important}
-  .ps{font-size:.75rem!important}
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -385,7 +377,7 @@ with st.sidebar:
                 'letter-spacing:.02em;margin-bottom:1rem">ML · Previsão de Cancelamentos EUA 2024</div>',
                 unsafe_allow_html=True)
     st.divider()
-    pagina = st.radio("nav", options=["  Dashboard","  Previsão","  Sobre"],
+    pagina = st.radio("nav", options=["  Dashboard","  Previsão","  Impacto","  Sobre"],
                       label_visibility="collapsed")
     st.divider()
     if "Dashboard" in pagina:
@@ -702,6 +694,167 @@ ou decisões operacionais das companhias aéreas — os principais determinantes
 # ─────────────────────────────────────────────────────────────────────────────
 # SOBRE
 # ─────────────────────────────────────────────────────────────────────────────
+elif "Impacto" in pagina:
+    st.markdown('<div class="ph"><h1>Impacto Operacional e Económico</h1></div>'
+                '<div class="ps">Como o modelo FlightSense gera valor real para companhias aéreas e aeroportos</div>',
+                unsafe_allow_html=True)
+
+    # ── Contexto ──────────────────────────────────────────────────────────────
+    st.markdown("""
+    <div style="background:#0F1729;border:1px solid rgba(21,101,255,.15);border-radius:12px;
+    padding:1.4rem 1.8rem;margin-bottom:1.5rem;line-height:1.75;color:#94A3B8;font-size:.9rem">
+    Os modelos <b style="color:#E8EDF8">HistGradient Boosting</b> (cancelamentos) e
+    <b style="color:#E8EDF8">XGBoost</b> (atrasos) foram treinados sobre mais de <b style="color:#00D4FF">1 milhão de voos</b>
+    reais (EUA, 2024) e são capazes de sinalizar perturbações <b style="color:#E8EDF8">antes da partida</b>,
+    sem aceder a dados meteorológicos em tempo real.<br><br>
+    Cada cancelamento detetado antecipadamente permite à companhia aérea realocar tripulações,
+    notificar passageiros e gerir gates com maior margem de tempo — reduzindo os custos
+    operacionais associados a perturbações de última hora.
+    </div>""", unsafe_allow_html=True)
+
+    # ── Calculadora ───────────────────────────────────────────────────────────
+    st.markdown('<div class="sl">Calculadora de Impacto Económico</div>', unsafe_allow_html=True)
+    st.markdown('<div style="color:#64748B;font-size:.83rem;margin-bottom:1rem">Ajusta os parâmetros à realidade da tua companhia aérea para estimar o valor mensal e anual do modelo.</div>', unsafe_allow_html=True)
+
+    col_inp, col_res = st.columns([1, 1], gap="large")
+
+    with col_inp:
+        st.markdown('<div class="sl">Parâmetros da companhia</div>', unsafe_allow_html=True)
+        n_voos      = st.number_input("Voos por mês", min_value=100, max_value=100000, value=5000, step=100,
+                                       help="Total de voos operados mensalmente")
+        custo_canc  = st.number_input("Custo médio por cancelamento não antecipado (€)", min_value=1000, max_value=500000,
+                                       value=45000, step=1000,
+                                       help="Inclui compensações, realojamento, custos de tripulação e reputação")
+        custo_atraso = st.number_input("Custo médio por atraso não antecipado (€)", min_value=500, max_value=100000,
+                                        value=8000, step=500,
+                                        help="Inclui combustível extra, taxas aeroportuárias e compensações")
+        custo_fp    = st.number_input("Custo de um falso alerta (€)", min_value=0, max_value=5000,
+                                       value=300, step=50,
+                                       help="Custo de rever e descartar um alerta errado do modelo")
+
+    with col_res:
+        # Cálculos — cancelamentos
+        canc_mes        = n_voos * (TAXA_BASE / 100)
+        canc_detetados  = canc_mes * RECALL                          # recall=0.266
+        fp_canc         = canc_detetados / 0.105 * (1 - 0.105)      # precision=0.105
+        poupanca_canc   = canc_detetados * custo_canc - fp_canc * custo_fp
+
+        # Cálculos — atrasos
+        atrasos_mes      = n_voos * (TAXA_BASE_DEL / 100)
+        atrasos_det      = atrasos_mes * RECALL_DEL                  # recall=0.396
+        fp_del           = atrasos_det / 0.227 * (1 - 0.227)        # precision=0.227
+        poupanca_atrasos = atrasos_det * custo_atraso - fp_del * custo_fp
+
+        poupanca_total   = max(poupanca_canc, 0) + max(poupanca_atrasos, 0)
+        poupanca_anual   = poupanca_total * 12
+
+        st.markdown('<div class="sl">Estimativa mensal</div>', unsafe_allow_html=True)
+
+        def kpi_box(label, value, sub, color="#00D4FF"):
+            return (f'<div style="background:#0F1729;border:1px solid rgba(21,101,255,.15);'
+                    f'border-radius:10px;padding:1rem 1.2rem;margin-bottom:.75rem">'
+                    f'<div style="font-family:\'JetBrains Mono\';font-size:.68rem;color:#3D506B;'
+                    f'letter-spacing:.08em;margin-bottom:.3rem">{label}</div>'
+                    f'<div style="font-size:1.6rem;font-weight:700;color:{color};'
+                    f'font-family:\'JetBrains Mono\'">{value}</div>'
+                    f'<div style="font-size:.75rem;color:#64748B;margin-top:.2rem">{sub}</div></div>')
+
+        st.markdown(
+            kpi_box("CANCELAMENTOS DETETADOS / MÊS",
+                    f"{canc_detetados:.0f}",
+                    f"de {canc_mes:.0f} esperados · {RECALL*100:.0f}% recall") +
+            kpi_box("POUPANÇA EST. — CANCELAMENTOS",
+                    f"€ {max(poupanca_canc,0):,.0f}",
+                    f"{canc_detetados:.0f} detetados × €{custo_canc:,} − {fp_canc:.0f} FP × €{custo_fp}",
+                    color="#10B981") +
+            kpi_box("ATRASOS DETETADOS / MÊS",
+                    f"{atrasos_det:.0f}",
+                    f"de {atrasos_mes:.0f} esperados · {RECALL_DEL*100:.0f}% recall") +
+            kpi_box("POUPANÇA EST. — ATRASOS",
+                    f"€ {max(poupanca_atrasos,0):,.0f}",
+                    f"{atrasos_det:.0f} detetados × €{custo_atraso:,} − {fp_del:.0f} FP × €{custo_fp}",
+                    color="#10B981"),
+            unsafe_allow_html=True)
+
+    # Total anual em destaque
+    st.divider()
+    ta1, ta2, ta3 = st.columns(3)
+    ta1.metric("Poupança mensal estimada",   f"€ {poupanca_total:,.0f}")
+    ta2.metric("Poupança anual estimada",    f"€ {poupanca_anual:,.0f}",
+               delta=f"+{poupanca_anual/1e6:.2f}M €/ano" if poupanca_anual >= 1e6 else None)
+    ta3.metric("Cancelamentos detetados/ano", f"{canc_detetados*12:.0f}",
+               delta=f"{RECALL*100:.0f}% recall do modelo")
+    st.divider()
+
+    # ── Beneficiários ─────────────────────────────────────────────────────────
+    st.markdown('<div class="sl">Valor por stakeholder</div>', unsafe_allow_html=True)
+    b1, b2, b3 = st.columns(3, gap="large")
+
+    def beneficio_card(col, titulo, items, cor):
+        with col:
+            linhas = "".join(f'<li style="margin-bottom:.4rem">{i}</li>' for i in items)
+            st.markdown(
+                f'<div style="background:#0F1729;border:1px solid {cor};border-radius:12px;'
+                f'padding:1.2rem 1.4rem;height:100%">'
+                f'<div style="font-family:\'JetBrains Mono\';font-size:.72rem;color:{cor};'
+                f'letter-spacing:.08em;margin-bottom:.8rem">{titulo}</div>'
+                f'<ul style="color:#94A3B8;font-size:.82rem;line-height:1.6;'
+                f'padding-left:1.1rem">{linhas}</ul></div>',
+                unsafe_allow_html=True)
+
+    beneficio_card(b1, "COMPANHIAS AÉREAS", [
+        "Realocação antecipada de tripulações e aeronaves",
+        "Redução de custos de compensação de última hora",
+        "Otimização do planeamento de slots",
+        "Menor impacto em cascata na rede de voos",
+    ], "#3B82F6")
+
+    beneficio_card(b2, "AEROPORTOS", [
+        "Gestão proativa de gates e recursos de solo",
+        "Planeamento de pessoal baseado em risco",
+        "Redução de congestionamento em dias críticos",
+        "Informação antecipada sobre rotas de risco",
+    ], "#06B6D4")
+
+    beneficio_card(b3, "PASSAGEIROS", [
+        "Notificação preventiva de perturbações",
+        "Tempo para alternativas de viagem",
+        "Menor tempo em espera sem informação",
+        "Experiência de viagem mais previsível",
+    ], "#10B981")
+
+    st.divider()
+
+    # ── Tabela comparativa ────────────────────────────────────────────────────
+    st.markdown('<div class="sl">Sem modelo vs. com modelo FlightSense</div>', unsafe_allow_html=True)
+    comp = pd.DataFrame({
+        "Situação": ["Cancelamentos antecipados", "Tempo de reação", "Custo médio por evento",
+                     "Satisfação do passageiro", "Planeamento operacional"],
+        "Sem Modelo": ["Reativo — detetado no momento",
+                       "< 1 hora (impossível planear)",
+                       f"€ {custo_canc:,} por cancelamento",
+                       "Baixa — surpresa operacional",
+                       "Baseado em histórico manual"],
+        "Com FlightSense": [f"{RECALL*100:.0f}% detetados antecipadamente",
+                            "Horas/dias de antecedência",
+                            f"€ {custo_canc * (1 - RECALL * 0.7):,.0f} (redução estimada)",
+                            "Alta — comunicação proativa",
+                            "Orientado por dados e ML"],
+    })
+    st.dataframe(comp, hide_index=True, use_container_width=True)
+
+    # ── Limitações honestas ───────────────────────────────────────────────────
+    st.divider()
+    with st.expander("  Limitações e pressupostos do modelo de impacto"):
+        st.markdown("""
+        - Os valores económicos são **estimativas** baseadas em benchmarks da indústria e nos parâmetros introduzidos — não são garantias de poupança.
+        - O modelo tem **Recall de 26.6%** para cancelamentos: deteta 1 em cada 4, não todos.
+        - Os **falsos positivos** (alertas incorretos) geram custos de revisão que foram incluídos no cálculo.
+        - O impacto real depende da **velocidade de resposta operacional** após o alerta.
+        - O modelo foi treinado apenas com dados de **2024 (EUA)** — padrões noutros contextos podem diferir.
+        - Não inclui dados meteorológicos em tempo real — a principal fonte de melhoria futura.
+        """)
+
 elif "Sobre" in pagina:
     st.markdown('<div class="ph"><h1>Sobre o Projeto</h1></div>'
                 '<div class="ps">FlightSense · Análise e Previsão de Cancelamentos EUA 2024</div>',
@@ -820,4 +973,3 @@ elif "Sobre" in pagina:
 **Docente:** Dora Melo — dmelo@iscac.pt
 **Notebook Kaggle:** [Modelação — Previsão de Cancelamentos](https://www.kaggle.com/code/rodrigoramooos/modelacao-previsao-de-cancelamentos-em-voos)
         """)
-
