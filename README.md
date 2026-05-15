@@ -20,7 +20,7 @@ Ano Letivo: 2025/2026
 | | Link |
 |---|---|
 | **Página do Projeto** | [projetovoos.live](https://projetovoos.live) |
-| **Aplicação FlightSense** | [previsao-cancelamento.streamlit.app](https://previsao-cancelamento.streamlit.app) |
+| **Aplicação FlightSense** | [previsao-voos.streamlit.app](https://previsao-voos.streamlit.app) |
 | **Notebook EDA (Kaggle)** | [eda-previsao-de-cancelamentos-em-voos](https://www.kaggle.com/code/rodrigoramooos/projeto-previsao-de-atraso-e-cancelamento-de-voos) |
 | **Notebook Modelação (Kaggle)** | [modelacao-previsao-de-cancelamentos-em-voos](https://www.kaggle.com/code/rodrigoramooos/modelacao-previsao-de-cancelamentos-em-voos) |
 
@@ -202,7 +202,7 @@ O modelo de cancelamentos identifica corretamente **1 em cada 4 voos que seriam 
 
 ### Resposta ao Problema
 
-Os dois modelos desenvolvidos respondem à questão central do projeto — é possível antecipar perturbações operacionais antes da partida de um voo, utilizando exclusivamente informação disponível em pré-voo, sem acesso a dados meteorológicos em tempo real. O *ROC-AUC* de 0.854 no modelo de cancelamentos supera o objetivo definido (> 0.80); o *ROC-AUC* de 0.718 no modelo de atrasos supera igualmente o objetivo (> 0.70). Os modelos são explicáveis via SHAP e estão disponíveis em produção na aplicação [FlightSense](https://previsao-cancelamento.streamlit.app).
+Os dois modelos desenvolvidos respondem à questão central do projeto — é possível antecipar perturbações operacionais antes da partida de um voo, utilizando exclusivamente informação disponível em pré-voo, sem acesso a dados meteorológicos em tempo real. O *ROC-AUC* de 0.854 no modelo de cancelamentos supera o objetivo definido (> 0.80); o *ROC-AUC* de 0.718 no modelo de atrasos supera igualmente o objetivo (> 0.70). Os modelos são explicáveis via SHAP e estão disponíveis em produção na aplicação [FlightSense](https://previsao-voos.streamlit.app).
 
 ### Recomendações de Inovação
 
