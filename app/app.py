@@ -112,6 +112,16 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
 .pv{color:var(--tx);font-weight:500}
 .sf{font-family:var(--mono);font-size:.68rem;color:var(--dim);
   line-height:1.7;border-top:1px solid var(--border);padding-top:.8rem;margin-top:.4rem}
+@media(max-width:768px){
+  .block-container{padding:.8rem .9rem 2rem!important}
+  [data-testid="stHorizontalBlock"]{flex-wrap:wrap!important;gap:.5rem!important}
+  [data-testid="column"]{width:100%!important;flex:1 1 100%!important;min-width:100%!important}
+  [data-testid="stSidebar"]{width:100%!important;min-width:0!important}
+  [data-testid="stForm"]{padding:1rem!important}
+  [data-testid="stMetricValue"]{font-size:1.2rem!important}
+  .ph h1{font-size:1.1rem!important}
+  .ps{font-size:.75rem!important}
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -122,6 +132,120 @@ NOMES_MES = {1:"Janeiro",2:"Fevereiro",3:"Março",4:"Abril",5:"Maio",6:"Junho",
              7:"Julho",8:"Agosto",9:"Setembro",10:"Outubro",11:"Novembro",12:"Dezembro"}
 NOMES_DIA = {1:"Segunda-feira",2:"Terça-feira",3:"Quarta-feira",
              4:"Quinta-feira",5:"Sexta-feira",6:"Sábado",7:"Domingo"}
+NOMES_AEROPORTO = {
+  "ABI":"ABI — Abilene, TX","ABQ":"ABQ — Albuquerque, NM","ABR":"ABR — Aberdeen, SD",
+  "ABY":"ABY — Albany, GA","ACT":"ACT — Waco, TX","ACV":"ACV — Arcata/Eureka, CA",
+  "ACY":"ACY — Atlantic City, NJ","ADK":"ADK — Adak, AK","ADQ":"ADQ — Kodiak, AK",
+  "AEX":"AEX — Alexandria, LA","AGS":"AGS — Augusta, GA","ALB":"ALB — Albany, NY",
+  "ALW":"ALW — Walla Walla, WA","AMA":"AMA — Amarillo, TX","ANC":"ANC — Anchorage, AK",
+  "APN":"APN — Alpena, MI","ASE":"ASE — Aspen, CO","ATL":"ATL — Atlanta, GA",
+  "ATW":"ATW — Appleton, WI","AUS":"AUS — Austin, TX","AVL":"AVL — Asheville, NC",
+  "AVP":"AVP — Wilkes-Barre/Scranton, PA","AZA":"AZA — Mesa (Phoenix), AZ",
+  "AZO":"AZO — Kalamazoo, MI","BDL":"BDL — Hartford, CT","BET":"BET — Bethel, AK",
+  "BFF":"BFF — Scottsbluff, NE","BFL":"BFL — Bakersfield, CA","BGM":"BGM — Binghamton, NY",
+  "BGR":"BGR — Bangor, ME","BHM":"BHM — Birmingham, AL","BIH":"BIH — Bishop, CA",
+  "BIL":"BIL — Billings, MT","BIS":"BIS — Bismarck, ND","BJI":"BJI — Bemidji, MN",
+  "BLI":"BLI — Bellingham, WA","BLV":"BLV — Belleville, IL","BMI":"BMI — Bloomington, IL",
+  "BNA":"BNA — Nashville, TN","BOI":"BOI — Boise, ID","BOS":"BOS — Boston, MA",
+  "BPT":"BPT — Beaumont, TX","BQK":"BQK — Brunswick, GA","BQN":"BQN — Aguadilla, PR",
+  "BRD":"BRD — Brainerd, MN","BRO":"BRO — Brownsville, TX","BRW":"BRW — Barrow, AK",
+  "BTM":"BTM — Butte, MT","BTR":"BTR — Baton Rouge, LA","BTV":"BTV — Burlington, VT",
+  "BUF":"BUF — Buffalo, NY","BUR":"BUR — Burbank, CA","BWI":"BWI — Baltimore, MD",
+  "BZN":"BZN — Bozeman, MT","CAE":"CAE — Columbia, SC","CAK":"CAK — Akron/Canton, OH",
+  "CDC":"CDC — Cedar City, UT","CDV":"CDV — Cordova, AK","CHA":"CHA — Chattanooga, TN",
+  "CHO":"CHO — Charlottesville, VA","CHS":"CHS — Charleston, SC","CID":"CID — Cedar Rapids, IA",
+  "CIU":"CIU — Sault Ste. Marie, MI","CKB":"CKB — Clarksburg, WV","CLE":"CLE — Cleveland, OH",
+  "CLL":"CLL — College Station, TX","CLT":"CLT — Charlotte, NC","CMH":"CMH — Columbus, OH",
+  "CMI":"CMI — Champaign, IL","CMX":"CMX — Hancock, MI","CNY":"CNY — Moab, UT",
+  "COS":"COS — Colorado Springs, CO","COU":"COU — Columbia, MO","CPR":"CPR — Casper, WY",
+  "CRP":"CRP — Corpus Christi, TX","CRW":"CRW — Charleston, WV","CSG":"CSG — Columbus, GA",
+  "CVG":"CVG — Cincinnati, KY","CWA":"CWA — Wausau, WI","CYS":"CYS — Cheyenne, WY",
+  "DAB":"DAB — Daytona Beach, FL","DAL":"DAL — Dallas Love Field, TX","DAY":"DAY — Dayton, OH",
+  "DCA":"DCA — Washington Reagan, DC","DDC":"DDC — Dodge City, KS","DEC":"DEC — Decatur, IL",
+  "DEN":"DEN — Denver, CO","DFW":"DFW — Dallas/Fort Worth, TX","DHN":"DHN — Dothan, AL",
+  "DIK":"DIK — Dickinson, ND","DLH":"DLH — Duluth, MN","DRO":"DRO — Durango, CO",
+  "DSM":"DSM — Des Moines, IA","DTW":"DTW — Detroit, MI","DVL":"DVL — Devils Lake, ND",
+  "ECP":"ECP — Panama City Beach, FL","EGE":"EGE — Eagle/Vail, CO","EKO":"EKO — Elko, NV",
+  "ELM":"ELM — Elmira, NY","ELP":"ELP — El Paso, TX","ESC":"ESC — Escanaba, MI",
+  "EUG":"EUG — Eugene, OR","EVV":"EVV — Evansville, IN","EWR":"EWR — Newark, NJ",
+  "EYW":"EYW — Key West, FL","FAI":"FAI — Fairbanks, AK","FAR":"FAR — Fargo, ND",
+  "FAT":"FAT — Fresno, CA","FAY":"FAY — Fayetteville, NC","FCA":"FCA — Kalispell, MT",
+  "FLG":"FLG — Flagstaff, AZ","FLL":"FLL — Fort Lauderdale, FL","FNT":"FNT — Flint, MI",
+  "FOD":"FOD — Fort Dodge, IA","FSD":"FSD — Sioux Falls, SD","FSM":"FSM — Fort Smith, AR",
+  "FWA":"FWA — Fort Wayne, IN","GCC":"GCC — Gillette, WY","GCK":"GCK — Garden City, KS",
+  "GEG":"GEG — Spokane, WA","GFK":"GFK — Grand Forks, ND","GGG":"GGG — Longview, TX",
+  "GJT":"GJT — Grand Junction, CO","GNV":"GNV — Gainesville, FL","GPT":"GPT — Gulfport, MS",
+  "GRB":"GRB — Green Bay, WI","GRI":"GRI — Grand Island, NE","GRK":"GRK — Killeen, TX",
+  "GRR":"GRR — Grand Rapids, MI","GSO":"GSO — Greensboro, NC","GSP":"GSP — Greenville, SC",
+  "GTF":"GTF — Great Falls, MT","GTR":"GTR — Columbus/Starkville, MS","GUC":"GUC — Gunnison, CO",
+  "GUM":"GUM — Guam, GU","HDN":"HDN — Hayden, CO","HGR":"HGR — Hagerstown, MD",
+  "HHH":"HHH — Hilton Head, SC","HIB":"HIB — Hibbing, MN","HLN":"HLN — Helena, MT",
+  "HNL":"HNL — Honolulu, HI","HOU":"HOU — Houston Hobby, TX","HPN":"HPN — White Plains, NY",
+  "HRL":"HRL — Harlingen, TX","HSV":"HSV — Huntsville, AL","HTS":"HTS — Huntington, WV",
+  "HYS":"HYS — Hays, KS","IAD":"IAD — Washington Dulles, DC","IAG":"IAG — Niagara Falls, NY",
+  "IAH":"IAH — Houston Intercontinental, TX","ICT":"ICT — Wichita, KS","IDA":"IDA — Idaho Falls, ID",
+  "ILM":"ILM — Wilmington, NC","IMT":"IMT — Iron Mountain, MI","IND":"IND — Indianapolis, IN",
+  "INL":"INL — International Falls, MN","ISP":"ISP — Long Island/Islip, NY",
+  "ITH":"ITH — Ithaca, NY","ITO":"ITO — Hilo, HI","JAC":"JAC — Jackson Hole, WY",
+  "JAN":"JAN — Jackson, MS","JAX":"JAX — Jacksonville, FL","JFK":"JFK — New York JFK, NY",
+  "JLN":"JLN — Joplin, MO","JMS":"JMS — Jamestown, ND","JNU":"JNU — Juneau, AK",
+  "JST":"JST — Johnstown, PA","KOA":"KOA — Kailua-Kona, HI","KTN":"KTN — Ketchikan, AK",
+  "LAN":"LAN — Lansing, MI","LAR":"LAR — Laramie, WY","LAS":"LAS — Las Vegas, NV",
+  "LAW":"LAW — Lawton, OK","LAX":"LAX — Los Angeles, CA","LBB":"LBB — Lubbock, TX",
+  "LBE":"LBE — Latrobe, PA","LBF":"LBF — North Platte, NE","LBL":"LBL — Liberal, KS",
+  "LCH":"LCH — Lake Charles, LA","LCK":"LCK — Columbus, OH","LEX":"LEX — Lexington, KY",
+  "LFT":"LFT — Lafayette, LA","LGA":"LGA — New York LaGuardia, NY","LGB":"LGB — Long Beach, CA",
+  "LIH":"LIH — Lihue, HI","LIT":"LIT — Little Rock, AR","LNK":"LNK — Lincoln, NE",
+  "LRD":"LRD — Laredo, TX","LSE":"LSE — La Crosse, WI","LWS":"LWS — Lewiston, ID",
+  "MAF":"MAF — Midland, TX","MBS":"MBS — Saginaw, MI","MCI":"MCI — Kansas City, MO",
+  "MCO":"MCO — Orlando, FL","MCW":"MCW — Mason City, IA","MDT":"MDT — Harrisburg, PA",
+  "MDW":"MDW — Chicago Midway, IL","MEI":"MEI — Meridian, MS","MEM":"MEM — Memphis, TN",
+  "MFE":"MFE — McAllen, TX","MFR":"MFR — Medford, OR","MGM":"MGM — Montgomery, AL",
+  "MHK":"MHK — Manhattan, KS","MHT":"MHT — Manchester, NH","MIA":"MIA — Miami, FL",
+  "MKE":"MKE — Milwaukee, WI","MLB":"MLB — Melbourne, FL","MLI":"MLI — Moline, IL",
+  "MLU":"MLU — Monroe, LA","MOB":"MOB — Mobile, AL","MOT":"MOT — Minot, ND",
+  "MQT":"MQT — Marquette, MI","MRY":"MRY — Monterey, CA","MSN":"MSN — Madison, WI",
+  "MSO":"MSO — Missoula, MT","MSP":"MSP — Minneapolis, MN","MSY":"MSY — New Orleans, LA",
+  "MTJ":"MTJ — Montrose, CO","MYR":"MYR — Myrtle Beach, SC","OAJ":"OAJ — Jacksonville, NC",
+  "OAK":"OAK — Oakland, CA","OGG":"OGG — Kahului (Maui), HI","OKC":"OKC — Oklahoma City, OK",
+  "OMA":"OMA — Omaha, NE","OME":"OME — Nome, AK","ONT":"ONT — Ontario, CA",
+  "ORD":"ORD — Chicago O'Hare, IL","ORF":"ORF — Norfolk, VA","ORH":"ORH — Worcester, MA",
+  "OTH":"OTH — North Bend, OR","OTZ":"OTZ — Kotzebue, AK","PAE":"PAE — Everett, WA",
+  "PBG":"PBG — Plattsburgh, NY","PBI":"PBI — West Palm Beach, FL","PDX":"PDX — Portland, OR",
+  "PGD":"PGD — Punta Gorda, FL","PHL":"PHL — Philadelphia, PA","PHX":"PHX — Phoenix, AZ",
+  "PIA":"PIA — Peoria, IL","PIB":"PIB — Hattiesburg, MS","PIE":"PIE — St. Petersburg, FL",
+  "PIH":"PIH — Pocatello, ID","PIT":"PIT — Pittsburgh, PA","PLN":"PLN — Pellston, MI",
+  "PNS":"PNS — Pensacola, FL","PPG":"PPG — Pago Pago, AS","PRC":"PRC — Prescott, AZ",
+  "PSC":"PSC — Pasco, WA","PSE":"PSE — Ponce, PR","PSG":"PSG — Petersburg, AK",
+  "PSM":"PSM — Portsmouth, NH","PSP":"PSP — Palm Springs, CA","PVD":"PVD — Providence, RI",
+  "PVU":"PVU — Provo, UT","PWM":"PWM — Portland, ME","RAP":"RAP — Rapid City, SD",
+  "RDD":"RDD — Redding, CA","RDM":"RDM — Redmond, OR","RDU":"RDU — Raleigh-Durham, NC",
+  "RFD":"RFD — Rockford, IL","RHI":"RHI — Rhinelander, WI","RIC":"RIC — Richmond, VA",
+  "RIW":"RIW — Riverton, WY","RKS":"RKS — Rock Springs, WY","RNO":"RNO — Reno, NV",
+  "ROA":"ROA — Roanoke, VA","ROC":"ROC — Rochester, NY","ROW":"ROW — Roswell, NM",
+  "RST":"RST — Rochester, MN","RSW":"RSW — Fort Myers, FL","SAF":"SAF — Santa Fe, NM",
+  "SAN":"SAN — San Diego, CA","SAT":"SAT — San Antonio, TX","SAV":"SAV — Savannah, GA",
+  "SBA":"SBA — Santa Barbara, CA","SBN":"SBN — South Bend, IN","SBP":"SBP — San Luis Obispo, CA",
+  "SCC":"SCC — Deadhorse, AK","SCE":"SCE — State College, PA","SCK":"SCK — Stockton, CA",
+  "SDF":"SDF — Louisville, KY","SEA":"SEA — Seattle, WA","SFB":"SFB — Sanford, FL",
+  "SFO":"SFO — San Francisco, CA","SGF":"SGF — Springfield, MO","SGU":"SGU — St. George, UT",
+  "SHR":"SHR — Sheridan, WY","SHV":"SHV — Shreveport, LA","SIT":"SIT — Sitka, AK",
+  "SJC":"SJC — San Jose, CA","SJT":"SJT — San Angelo, TX","SJU":"SJU — San Juan, PR",
+  "SLC":"SLC — Salt Lake City, UT","SLN":"SLN — Salina, KS","SMF":"SMF — Sacramento, CA",
+  "SMX":"SMX — Santa Maria, CA","SNA":"SNA — Orange County, CA","SPI":"SPI — Springfield, IL",
+  "SPN":"SPN — Saipan, MP","SPS":"SPS — Wichita Falls, TX","SRQ":"SRQ — Sarasota, FL",
+  "STC":"STC — St. Cloud, MN","STL":"STL — St. Louis, MO","STS":"STS — Santa Rosa, CA",
+  "STT":"STT — St. Thomas, USVI","STX":"STX — St. Croix, USVI","SUN":"SUN — Sun Valley, ID",
+  "SUX":"SUX — Sioux City, IA","SWF":"SWF — Newburgh, NY","SWO":"SWO — Stillwater, OK",
+  "SYR":"SYR — Syracuse, NY","TLH":"TLH — Tallahassee, FL","TOL":"TOL — Toledo, OH",
+  "TPA":"TPA — Tampa, FL","TRI":"TRI — Tri-Cities, TN","TTN":"TTN — Trenton, NJ",
+  "TUL":"TUL — Tulsa, OK","TUS":"TUS — Tucson, AZ","TVC":"TVC — Traverse City, MI",
+  "TWF":"TWF — Twin Falls, ID","TXK":"TXK — Texarkana, AR","TYR":"TYR — Tyler, TX",
+  "TYS":"TYS — Knoxville, TN","USA":"USA — Concord, NC","VCT":"VCT — Victoria, TX",
+  "VEL":"VEL — Vernal, UT","VLD":"VLD — Valdosta, GA","VPS":"VPS — Fort Walton Beach, FL",
+  "WRG":"WRG — Wrangell, AK","XNA":"XNA — Fayetteville/Rogers, AR","XWA":"XWA — Williston, ND",
+  "YAK":"YAK — Yakutat, AK","YUM":"YUM — Yuma, AZ",
+}
 C_RED="#EF4444"; C_GREEN="#10B981"; C_BLUE="#1565FF"; C_CYAN="#00D4FF"; C_AMBER="#F59E0B"
 BG_CARD="#0F1729"
 PL = dict(paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",
@@ -405,7 +529,8 @@ elif "Previsão" in pagina:
             with c2:
                 st.markdown('<div class="sl">Dados do voo</div>', unsafe_allow_html=True)
                 aeroportos = sorted([c.replace("origin_","") for c in feature_names if c.startswith("origin_")])
-                aeroporto  = st.selectbox("Aeroporto de origem (IATA)", options=aeroportos,
+                aeroporto  = st.selectbox("Aeroporto de origem", options=aeroportos,
+                                          format_func=lambda ap: NOMES_AEROPORTO.get(ap, ap),
                                           key=f"ap_{form_key}")
                 distancia  = st.number_input("Distância (milhas)", min_value=50, max_value=5000,
                                              value=800, step=50, key=f"dist_{form_key}")
@@ -693,3 +818,4 @@ elif "Sobre" in pagina:
 **Docente:** Dora Melo — dmelo@iscac.pt
 **Notebook Kaggle:** [Modelação — Previsão de Cancelamentos](https://www.kaggle.com/code/rodrigoramooos/modelacao-previsao-de-cancelamentos-em-voos)
         """)
+
