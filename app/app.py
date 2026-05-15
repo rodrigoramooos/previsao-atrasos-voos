@@ -16,6 +16,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 
 warnings.filterwarnings("ignore")
 
@@ -118,6 +119,21 @@ section[data-testid="stSidebar"][aria-expanded="false"]{margin-left:0!important;
   line-height:1.7;border-top:1px solid var(--border);padding-top:.8rem;margin-top:.4rem}
 </style>
 """, unsafe_allow_html=True)
+
+components.html("""
+<script>
+(function() {
+  function keepSidebarOpen() {
+    var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
+    if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
+      var btn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
+      if (btn) btn.click();
+    }
+  }
+  setInterval(keepSidebarOpen, 300);
+})();
+</script>
+""", height=0)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONSTANTES
