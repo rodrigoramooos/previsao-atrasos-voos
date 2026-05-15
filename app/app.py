@@ -88,6 +88,7 @@ hr{border:none!important;border-top:1px solid var(--border)!important;margin:1.5
 [data-testid="stRadio"] [aria-checked="true"]+label,[data-testid="stRadio"] [aria-checked="true"]~div label{
   color:var(--cyan)!important;font-weight:600!important}
 #MainMenu,footer,header{visibility:hidden!important}
+header [data-testid="collapsedControl"]{visibility:visible!important;pointer-events:auto!important}
 [data-testid="stDecoration"]{display:none!important}
 @media(min-width:769px){
   [data-testid="collapsedControl"]{display:none!important}
