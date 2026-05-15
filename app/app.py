@@ -150,15 +150,48 @@ header [data-testid="collapsedControl"]{visibility:visible!important;pointer-eve
 components.html("""
 <script>
 (function() {
-  function keepSidebarOpen() {
-    if (parent.window.innerWidth <= 768) return;
-    var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
-    if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
-      var btn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
-      if (btn) btn.click();
+  function run() {
+    var isMobile = parent.window.innerWidth <= 768;
+
+    // Desktop: keep sidebar always open
+    if (!isMobile) {
+      var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
+      if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
+        var btn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
+        if (btn) btn.click();
+      }
+      var existing = parent.document.getElementById('fs-menu-btn');
+      if (existing) existing.remove();
+      return;
+    }
+
+    // Mobile: add floating hamburger button
+    if (!parent.document.getElementById('fs-menu-btn')) {
+      var fab = parent.document.createElement('button');
+      fab.id = 'fs-menu-btn';
+      fab.innerHTML = '&#9776;';
+      fab.style.cssText = [
+        'position:fixed','top:12px','left:12px','z-index:9999999',
+        'background:rgba(21,101,255,0.95)','color:#fff','border:none',
+        'border-radius:8px','padding:8px 14px','font-size:20px',
+        'cursor:pointer','box-shadow:0 2px 12px rgba(0,0,0,0.5)',
+        'line-height:1'
+      ].join('!important;') + '!important';
+      fab.onclick = function() {
+        var expandBtn = parent.document.querySelector('[data-testid="collapsedControl"] button');
+        var collapseBtn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
+        var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
+        if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
+          if (expandBtn) expandBtn.click();
+          else if (collapseBtn) collapseBtn.click();
+        } else {
+          if (collapseBtn) collapseBtn.click();
+        }
+      };
+      parent.document.body.appendChild(fab);
     }
   }
-  setInterval(keepSidebarOpen, 300);
+  setInterval(run, 400);
 })();
 </script>
 """, height=0)
