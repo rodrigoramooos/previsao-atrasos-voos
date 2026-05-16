@@ -150,47 +150,82 @@ header [data-testid="collapsedControl"]{visibility:visible!important;pointer-eve
 components.html("""
 <script>
 (function() {
-  function run() {
-    var isMobile = parent.window.innerWidth <= 768;
-
-    // Desktop: keep sidebar always open
-    if (!isMobile) {
-      var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
-      if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
-        var btn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
-        if (btn) btn.click();
-      }
-      var existing = parent.document.getElementById('fs-menu-btn');
-      if (existing) existing.remove();
-      return;
-    }
-
-    // Mobile: add floating hamburger button
-    if (!parent.document.getElementById('fs-menu-btn')) {
-      var fab = parent.document.createElement('button');
-      fab.id = 'fs-menu-btn';
-      fab.innerHTML = '&#9776;';
-      fab.style.cssText = [
-        'position:fixed','top:12px','left:12px','z-index:9999999',
-        'background:rgba(21,101,255,0.95)','color:#fff','border:none',
-        'border-radius:8px','padding:8px 14px','font-size:20px',
-        'cursor:pointer','box-shadow:0 2px 12px rgba(0,0,0,0.5)',
-        'line-height:1'
-      ].join('!important;') + '!important';
-      fab.onclick = function() {
-        var expandBtn = parent.document.querySelector('[data-testid="collapsedControl"] button');
-        var collapseBtn = parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
-        var sidebar = parent.document.querySelector('section[data-testid="stSidebar"]');
-        if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
-          if (expandBtn) expandBtn.click();
-          else if (collapseBtn) collapseBtn.click();
-        } else {
-          if (collapseBtn) collapseBtn.click();
-        }
-      };
-      parent.document.body.appendChild(fab);
+  function toggleSidebar() {
+    var p = parent.document;
+    var sidebar = p.querySelector('section[data-testid="stSidebar"]');
+    var isOpen = sidebar && sidebar.getAttribute('aria-expanded') !== 'false';
+    if (isOpen) {
+      var closeBtn = p.querySelector('[data-testid="stSidebarCollapseButton"] button') ||
+                     p.querySelector('[data-testid="stSidebarCollapseButton"]');
+      if (closeBtn) closeBtn.click();
+    } else {
+      var openBtn = p.querySelector('[data-testid="collapsedControl"] button') ||
+                    p.querySelector('[data-testid="collapsedControl"]');
+      if (openBtn) openBtn.click();
     }
   }
+
+  function addFAB() {
+    var p = parent.document;
+    if (p.getElementById('fs-fab')) return;
+    var btn = p.createElement('button');
+    btn.id = 'fs-fab';
+    btn.textContent = '☰';
+    btn.setAttribute('style', [
+      'position:fixed',
+      'top:10px',
+      'left:10px',
+      'z-index:2147483647',
+      'width:42px',
+      'height:42px',
+      'background:#1565FF',
+      'color:#fff',
+      'border:none',
+      'border-radius:10px',
+      'font-size:22px',
+      'line-height:42px',
+      'text-align:center',
+      'cursor:pointer',
+      'box-shadow:0 3px 14px rgba(0,0,0,0.6)',
+      '-webkit-tap-highlight-color:transparent',
+      'touch-action:manipulation'
+    ].join(';'));
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSidebar();
+    }, {passive: false});
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleSidebar();
+    });
+    p.body.appendChild(btn);
+  }
+
+  function removeFAB() {
+    var btn = parent.document.getElementById('fs-fab');
+    if (btn) btn.remove();
+  }
+
+  function keepDesktopOpen() {
+    var p = parent.document;
+    var sidebar = p.querySelector('section[data-testid="stSidebar"]');
+    if (sidebar && sidebar.getAttribute('aria-expanded') === 'false') {
+      var btn = p.querySelector('[data-testid="stSidebarCollapseButton"] button') ||
+                p.querySelector('[data-testid="stSidebarCollapseButton"]');
+      if (btn) btn.click();
+    }
+  }
+
+  function run() {
+    if (parent.window.innerWidth <= 768) {
+      addFAB();
+    } else {
+      removeFAB();
+      keepDesktopOpen();
+    }
+  }
+
   setInterval(run, 400);
 })();
 </script>
