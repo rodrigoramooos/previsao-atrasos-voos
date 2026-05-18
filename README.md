@@ -66,6 +66,7 @@ previsao-atrasos-voos/
 ├── src/                    ← Reservado para módulos auxiliares
 ├── index.html              ← Página de entrada (GitHub Pages)
 ├── requirements.txt        ← Dependências do projeto
+├── Q&A.md        
 └── README.md
 ```
 
