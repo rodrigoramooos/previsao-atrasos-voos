@@ -228,6 +228,7 @@ Os modelos são explicáveis via Permutation Importance e SHAP, e estão dispon�
 6. **Expor os modelos como API REST** (FastAPI) para integração com sistemas de gestão aeroportuária
 
 📄 Documento completo: [`docs/M4_conclusoes.md`](docs/M4_conclusoes.md)
+
 ---
 
 ## Fonte de Dados
