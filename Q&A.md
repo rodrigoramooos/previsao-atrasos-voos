@@ -1,4 +1,4 @@
-# Q&A Assíncrono — FlightSense
+# Q&A Assíncrono
 
 **Projeto:** Previsão de Atrasos e Cancelamentos de Voos Comerciais  
 **Grupo:** 1 — Rodrigo Ramos (a2023137922) · Bruno Almeida (a2023143583)  
