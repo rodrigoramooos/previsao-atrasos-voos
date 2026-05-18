@@ -91,6 +91,7 @@ Desenvolver e avaliar dois modelos de classificação binária — um para preve
 - **Dataset:** [Flight Delay & Cancellation Data — 1M+ (2024)](https://www.kaggle.com/datasets/nalisha/flight-delay-and-cancellation-data-1-million-2024/data) — *Bureau of Transportation Statistics* (BTS), U.S. DOT
 - **Notebook EDA:** [1.0_eda_limpeza — Kaggle](https://www.kaggle.com/code/rodrigoramooos/eda-previsao-de-cancelamentos-em-voos)
 - **Notebook Modelação:** [mod-final — Kaggle](https://www.kaggle.com/code/rodrigoramooos/modelacao-previsao-de-cancelamentos-em-voos)
+- **Notebook Interpretação:** [interpretacao-modelos-previsao-voos](https://www.kaggle.com/code/rodrigoramooos/interpreta-o-dos-modelos-previs-o-de-voos)
 - **Dimensão do Dataset:** 1 048 575 linhas · 18 colunas
 
 ### Perguntas de Investigação
@@ -208,7 +209,7 @@ O *ROC-AUC* de **0.871** no modelo de cancelamentos e de **0.723** no modelo de 
 
 | | Cancelamentos | Atrasos |
 |---|---|---|
-| **Algoritmo** | HistGradient Boosting | HistGradient Boosting |
+| **Algoritmo** | HistGradient Boosting |  XGBoost |
 | **Threshold** | 0.806 | 0.606 |
 | **F1-score** | 0.166 | 0.291 |
 | **Recall** | 0.327 | 0.416 |
