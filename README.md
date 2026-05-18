@@ -105,9 +105,8 @@ Desenvolver e avaliar dois modelos de classificação binária — um para preve
 - **pandas** — Carregamento, limpeza e transformação de dados
 - **numpy** — Operações numéricas e manipulação de *arrays*
 - **matplotlib / seaborn / plotly** — Visualização de dados estatísticos e interativos
-- **scikit-learn** — Pré-processamento, modelação, validação cruzada e `TunedThresholdClassifierCV`
-- **XGBoost** — Algoritmo de *gradient boosting* para o modelo de atrasos
-- **SHAP** — Interpretabilidade global e local dos modelos
+- **scikit-learn** — Pré-processamento, modelação, validação cruzada, `TunedThresholdClassifierCV` e `HistGradientBoostingClassifier`
+- **SHAP** — Interpretabilidade complementar dos modelos
 - **Streamlit** — Desenvolvimento da aplicação web *FlightSense*
 - **joblib** — Serialização e carregamento dos modelos treinados
 
