@@ -202,18 +202,32 @@ O modelo de cancelamentos identifica corretamente **1 em cada 4 voos que seriam 
 
 ### Resposta ao Problema
 
-Os dois modelos desenvolvidos respondem à questão central do projeto — é possível antecipar perturbações operacionais antes da partida de um voo, utilizando exclusivamente informação disponível em pré-voo, sem acesso a dados meteorológicos em tempo real. O *ROC-AUC* de 0.854 no modelo de cancelamentos supera o objetivo definido (> 0.80); o *ROC-AUC* de 0.718 no modelo de atrasos supera igualmente o objetivo (> 0.70). Os modelos são explicáveis via SHAP e estão disponíveis em produção na aplicação [FlightSense](https://previsao-voos.streamlit.app).
+Os dois modelos desenvolvidos respondem à questão central do projeto — é possível antecipar perturbações operacionais antes da partida de um voo, utilizando exclusivamente informação disponível em pré-voo, sem acesso a dados meteorológicos em tempo real. Ambos os modelos utilizam **HistGradientBoostingClassifier** com threshold otimizado por validação cruzada estratificada.
+
+O *ROC-AUC* de **0.871** no modelo de cancelamentos e de **0.723** no modelo de atrasos superam os objetivos definidos (> 0.80 e > 0.70, respetivamente). A métrica mais informativa neste contexto de desequilíbrio severo é, no entanto, a **PR-AUC** (Average Precision): 0.100 para cancelamentos e 0.226 para atrasos, refletindo a dificuldade estrutural imposta pelos rácios de 64:1 e 11:1 entre classes.
+
+| | Cancelamentos | Atrasos |
+|---|---|---|
+| **Algoritmo** | HistGradient Boosting | HistGradient Boosting |
+| **Threshold** | 0.806 | 0.606 |
+| **F1-score** | 0.166 | 0.291 |
+| **Recall** | 0.327 | 0.416 |
+| **ROC-AUC** | 0.871 | 0.723 |
+| **PR-AUC** | 0.100 | 0.226 |
+| **FP/TP** | 8.0 | 3.5 |
+
+Os modelos são explicáveis via Permutation Importance e SHAP, e estão disponíveis em produção na aplicação [FlightSense](https://previsao-cancelamento.streamlit.app).
 
 ### Recomendações de Inovação
 
-1. **Integrar dados meteorológicos históricos (NOAA / OpenWeatherMap)** — maior ganho de *Avg Precision* esperado, abordando a principal limitação atual
-2. **Adicionar hora de partida programada** (`scheduled_departure_hour`) — variável altamente informativa ausente do dataset
-3. **Testar *ensemble stacking*** (HistGBT + XGBoost) — melhor robustez nas zonas de incerteza
-4. **Aplicar calibração de probabilidades** (`CalibratedClassifierCV`) — *scores* mais úteis em sistemas de decisão automatizados
-5. **Expor os modelos como API REST** (FastAPI) para integração com sistemas de gestão aeroportuária
+1. **Integrar dados meteorológicos históricos (NOAA / OpenWeatherMap)** — maior ganho de *PR-AUC* esperado; a análise de falsos negativos (probabilidades medianas de 0.659 e 0.455 abaixo dos thresholds) confirma que os eventos não detetados têm causas climáticas não representadas no dataset
+2. **Adicionar hora de partida programada** (`scheduled_departure_hour`) — variável altamente informativa ausente do dataset atual, disponível na fonte BTS original
+3. **Incorporar histórico do avião** (`tail_number`) — permite modelar o efeito cascata de atrasos entre voos consecutivos do mesmo aparelho
+4. **Testar técnicas de reamostragem** (SMOTE, ADASYN) — complementar ao `class_weight='balanced'` atual para melhor aprendizagem das fronteiras de decisão em `cancelled` (64:1)
+5. **Aplicar calibração de probabilidades** (`CalibratedClassifierCV`) — *scores* mais fiáveis em sistemas de decisão automatizados
+6. **Expor os modelos como API REST** (FastAPI) para integração com sistemas de gestão aeroportuária
 
 📄 Documento completo: [`docs/M4_conclusoes.md`](docs/M4_conclusoes.md)
-
 ---
 
 ## Fonte de Dados
