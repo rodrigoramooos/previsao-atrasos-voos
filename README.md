@@ -158,7 +158,7 @@ A variável `is_delayed` foi construída a partir de `weather_delay + late_aircr
 
 | | Cancelamentos | Atrasos |
 |---|---|---|
-| **Algoritmo** | *HistGradient Boosting* | XGBoost |
+| **Algoritmo** | *HistGradient Boosting* | *XGBoost* |
 | **F1-*score*** | 0.151 | 0.289 |
 | ***Recall*** | 0.266 | 0.396 |
 | ***Precision*** | 0.105 | 0.227 |
@@ -169,7 +169,7 @@ A variável `is_delayed` foi construída a partir de `weather_delay + late_aircr
 
 Ambos os objetivos *ROC-AUC* foram superados (> 0.80 nos cancelamentos; > 0.70 nos atrasos).
 
-### Interpretação dos Modelos (SHAP)
+### Interpretação dos Modelos
 
 **Cancelamentos — principais fatores:**
 
