@@ -15,6 +15,12 @@ Ano Letivo: 2025/2026
 
 ---
 
+## Vídeo de Apresentação do Projeto
+
+[![YouTube](https://img.shields.io/badge/YouTube-Assistir%20Vídeo-red?style=for-the-badge&logo=youtube)](https://youtu.be/_U_Goo5x81M?si=M11H2Fz1Mt4UeVvb)
+
+> Apresentação do projeto final — Grupo 1 · ISCAC 2026
+
 ## Acesso Rápido
 
 | | Link |
